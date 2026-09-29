@@ -18,12 +18,13 @@ npm run dev        # start dev server
 npm run build      # type-check + build for production
 npm run lint       # run ESLint
 npm run test       # run tests once
+npm run check      # lint + build + test (run before committing)
 ```
 
 ## Rules
 
 - Always work on a new branch named `feature/<short-name>` or `fix/<short-name>`. Never commit to `main`.
-- Run lint and tests before committing. Don't open a PR if they fail.
+- Run `npm run check` before committing, not after every change. Don't open a PR if it fails.
 - Open PRs with `gh`, including a summary of changes, how to test, and "Closes #N" if there's a related issue.
 - Keep all localStorage access in a single storage module.
 - Never commit secrets; use environment variables.
