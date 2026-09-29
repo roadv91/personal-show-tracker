@@ -27,3 +27,20 @@ npm run test       # run tests once
 - Open PRs with `gh`, including a summary of changes, how to test, and "Closes #N" if there's a related issue.
 - Keep all localStorage access in a single storage module.
 - Never commit secrets; use environment variables.
+- Keep `languageOptions.ecmaVersion` in `eslint.config.js` in sync with `target` in `tsconfig.app.json` and `tsconfig.node.json`.
+
+## Coding conventions
+
+- Avoid duplication of code by moving shared logic into hooks or utils and shared UI code into components.
+- Avoid side effects if possible and if not, point them out.
+- Components, hooks, and functions should have adequate JSDoc.
+- Prefer named exports for shared modules.
+- Prefer descriptive variable names over abbreviations.
+- Use kebab-case for file names, class names, and element IDs. camelCase for variables and functions. PascalCase for components, types, enums, interfaces, and classes.
+- Do not leave dead code.
+
+## UI and Design Rules
+
+- Components must be responsive (keep in mind mobile, tablet, and desktop).
+- Most designs will be the same for tablet and desktop.
+- Meet and point out any accessibility concerns.
