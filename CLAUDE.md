@@ -24,6 +24,7 @@ npm run check      # lint + build + test (run before committing)
 ## Rules
 
 - Always work on a new branch named `feature/<short-name>` or `fix/<short-name>`. Never commit to `main`.
+- A Husky pre-commit hook (`.husky/pre-commit`, installed automatically by `npm install`) blocks commits made directly on `main`. Create a branch first.
 - Run `npm run check` before committing, not after every change. Don't open a PR if it fails.
 - Open PRs with `gh`, including a summary of changes, how to test, and "Closes #N" if there's a related issue.
 - Keep all localStorage access in a single storage module.

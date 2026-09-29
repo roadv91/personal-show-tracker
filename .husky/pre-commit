@@ -1,0 +1,9 @@
+current_branch=$(git branch --show-current)
+
+if [ "$current_branch" = "main" ]; then
+  echo "Oops! Committing directly to main isn't allowed."
+  echo "Create a branch first, e.g.:"
+  echo "  git switch -c feature/<short-name>"
+  echo "  git switch -c fix/<short-name>"
+  exit 1
+fi
