@@ -68,6 +68,8 @@ tokens/         # design tokens exported from Figma (tokens.json), gitignored
 - Avoid side effects if possible and if not, point them out.
 - Components, hooks, and functions should have adequate JSDoc.
 - Prefer named exports for shared modules.
+- Use ES6 declarations: `const`/`let` and arrow functions (`const name = () => {}`), not `var` or `function` declarations.
+- Type all React components as `FC` (e.g. `export const Badge: FC<BadgeProps> = ({ type }) => ...`).
 - Prefer descriptive variable names over abbreviations.
 - Use kebab-case for file names, class names, and element IDs. camelCase for variables and functions. PascalCase for components, types, enums, interfaces, and classes.
 - Do not leave dead code.
