@@ -4,7 +4,7 @@ import { Badge, type BadgeType } from './badge'
 
 describe('Badge', () => {
   it('renders its label', () => {
-    render(<Badge type="ongoing">Currently Watching</Badge>)
+    render(<Badge type="ongoing" label="Currently Watching" />)
     expect(screen.getByText('Currently Watching')).toBeInTheDocument()
   })
 
@@ -13,7 +13,7 @@ describe('Badge', () => {
     ['completed', 'bg-badge-completed-bg', 'text-badge-completed-text'],
     ['dropped', 'bg-badge-dropped-bg', 'text-badge-dropped-text'],
   ])('applies the %s type colors', (type, backgroundClassName, textClassName) => {
-    render(<Badge type={type}>Label</Badge>)
+    render(<Badge type={type} label="Label" />)
     expect(screen.getByText('Label')).toHaveClass(backgroundClassName, textClassName)
   })
 })
