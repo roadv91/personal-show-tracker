@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
 
 /** Types of badge, matching the `badge/<type>` design tokens. */
 export type BadgeType = 'ongoing' | 'completed' | 'dropped'
@@ -26,12 +26,10 @@ export interface BadgeProps {
  * @param props - See {@link BadgeProps}.
  * @returns The badge element.
  */
-export function Badge({ type, children }: BadgeProps) {
-  return (
-    <span
-      className={`inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold ${typeClassNames[type]}`}
-    >
-      {children}
-    </span>
-  )
-}
+export const Badge: FC<BadgeProps> = ({ type, children }) => (
+  <span
+    className={`inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold ${typeClassNames[type]}`}
+  >
+    {children}
+  </span>
+)
