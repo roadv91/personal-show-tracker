@@ -55,4 +55,11 @@ export default tseslint.config(
       },
     },
   },
+  {
+    // Scripts run in Node, not the browser
+    files: ['scripts/**/*.ts'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
 )
