@@ -10,7 +10,7 @@ export interface IconButtonProps {
   /** Called when the button is clicked. */
   onClick?: MouseEventHandler<HTMLButtonElement>
   /**
-   * Width and height of the icon in pixels. The button itself is always at least 44×44px.
+   * Width and height of the icon in pixels. The button is at least 32×32px and grows to fit larger icons.
    * @default 24
    */
   size?: number
@@ -25,8 +25,11 @@ export interface IconButtonProps {
 /**
  * Button showing only an icon, with hover, active, focus, and disabled states.
  *
+ * On hover the icon darkens slightly, and on press it darkens further. This uses a brightness
+ * filter, so it works with any icon color (except pure black, which can't get darker).
+ *
  * The icon is hidden from screen readers; `label` is the button's accessible name.
- * The button is at least 44×44px so it's easy to tap on touch screens.
+ * The tap target is at least 32×32px, or the icon's size if that's larger.
  *
  * @param props - See {@link IconButtonProps}.
  * @returns The button element.
@@ -37,7 +40,7 @@ export const IconButton: FC<IconButtonProps> = ({ name, label, onClick, size = 2
     aria-label={label}
     onClick={onClick}
     disabled={disabled}
-    className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-full text-[#404040] enabled:hover:bg-[#f5f5f5] enabled:active:bg-[#e5e5e5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563eb] disabled:cursor-not-allowed disabled:text-[#a3a3a3]"
+    className="inline-flex min-h-8 min-w-8 cursor-pointer items-center justify-center rounded-sm text-[#404040] enabled:hover:*:brightness-85 enabled:active:*:brightness-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563eb] disabled:cursor-not-allowed disabled:text-[#a3a3a3]"
   >
     <Icon name={name} size={size} />
   </button>
