@@ -21,7 +21,6 @@ export interface IconButtonProps {
   disabled?: boolean
 }
 
-// TODO: Replace the placeholder raw colors with `icon-button/*` design tokens once they exist in Figma.
 /**
  * Button showing only an icon, with hover, active, focus, and disabled states.
  *
@@ -40,8 +39,9 @@ export const IconButton: FC<IconButtonProps> = ({ name, label, onClick, size = 2
     aria-label={label}
     onClick={onClick}
     disabled={disabled}
-    className="inline-flex min-h-8 min-w-8 cursor-pointer items-center justify-center rounded-sm text-[#404040] enabled:hover:*:brightness-85 enabled:active:*:brightness-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563eb] disabled:cursor-not-allowed disabled:text-[#a3a3a3]"
+    className="inline-flex min-h-8 min-w-8 cursor-pointer items-center justify-center rounded-sm text-icon-button-content enabled:hover:*:brightness-85 enabled:active:*:brightness-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-icon-button-focus-ring disabled:cursor-not-allowed disabled:text-icon-button-content-disabled"
   >
-    <Icon name={name} size={size} />
+    {/* `currentColor` lets the button's text color (including the disabled color) reach the icon */}
+    <Icon name={name} size={size} color="currentColor" />
   </button>
 )

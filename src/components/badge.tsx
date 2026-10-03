@@ -3,12 +3,11 @@ import type { FC } from 'react'
 /** Types of badge, matching the `badge/<type>` design tokens. */
 export type BadgeType = 'ongoing' | 'completed' | 'dropped'
 
-// TODO: Rename the Figma tokens so their names don't start or end with `bg`/`text` (avoids classes like `bg-badge-ongoing-bg`).
 /** Tailwind classes for each type. Written out in full so Tailwind can detect them. */
 const typeClassNames: Record<BadgeType, string> = {
-  ongoing: 'bg-badge-ongoing-bg text-badge-ongoing-text',
-  completed: 'bg-badge-completed-bg text-badge-completed-text',
-  dropped: 'bg-badge-dropped-bg text-badge-dropped-text',
+  ongoing: 'bg-badge-ongoing-surface text-badge-ongoing-content',
+  completed: 'bg-badge-completed-surface text-badge-completed-content',
+  dropped: 'bg-badge-dropped-surface text-badge-dropped-content',
 }
 
 /** Props for {@link Badge}. */

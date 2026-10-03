@@ -9,9 +9,9 @@ describe('Badge', () => {
   })
 
   it.each<[BadgeType, string, string]>([
-    ['ongoing', 'bg-badge-ongoing-bg', 'text-badge-ongoing-text'],
-    ['completed', 'bg-badge-completed-bg', 'text-badge-completed-text'],
-    ['dropped', 'bg-badge-dropped-bg', 'text-badge-dropped-text'],
+    ['ongoing', 'bg-badge-ongoing-surface', 'text-badge-ongoing-content'],
+    ['completed', 'bg-badge-completed-surface', 'text-badge-completed-content'],
+    ['dropped', 'bg-badge-dropped-surface', 'text-badge-dropped-content'],
   ])('applies the %s type colors', (type, backgroundClassName, textClassName) => {
     render(<Badge type={type} label="Label" />)
     expect(screen.getByText('Label')).toHaveClass(backgroundClassName, textClassName)
