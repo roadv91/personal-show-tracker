@@ -4,7 +4,7 @@
  * - Primitives become plain CSS variables on `:root` (`--primitive-color-blue-700`), so they
  *   don't generate Tailwind utilities.
  * - Semantic tokens become Tailwind `--color-*` theme variables that reference the primitives,
- *   so components use them through classes like `bg-page-bg`. Tailwind's default palette is
+ *   so components use them through classes like `bg-page-surface`. Tailwind's default palette is
  *   removed, so these are the only colors available.
  *
  * Run with: npm run build:tokens

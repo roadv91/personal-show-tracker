@@ -13,9 +13,9 @@ export interface IconProps {
    */
   size?: number
   /**
-   * Fill color. Accepts any CSS color: a design token (`var(--color-badge-ongoing-text)`),
-   * hex, `rgb()`, a named color, etc. The default inherits the parent's text color.
-   * @default 'currentColor'
+   * Fill color. Accepts any CSS color: a design token (`var(--color-badge-ongoing-content)`),
+   * hex, `rgb()`, a named color, `currentColor` to inherit the parent's text color, etc.
+   * @default 'var(--color-icon-content)'
    */
   color?: string
   /**
@@ -26,16 +26,15 @@ export interface IconProps {
   label?: string
 }
 
-// TODO: Add grey-scale tokens in Figma and apply one here as the default icon color.
 /**
  * SVG icon drawn on a 24×24 grid.
  *
- * Set the color with the `color` prop, or leave it out to inherit the parent's text color.
+ * Uses the `icon/content` token color unless the `color` prop sets another one.
  *
  * @param props - See {@link IconProps}.
  * @returns The icon's `<svg>` element.
  */
-export const Icon: FC<IconProps> = ({ name, size = 24, color = 'currentColor', label }) => {
+export const Icon: FC<IconProps> = ({ name, size = 24, color = 'var(--color-icon-content)', label }) => {
   const PathComponent = iconComponentsMap[name]
 
   return (

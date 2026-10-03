@@ -20,13 +20,13 @@ describe('Icon', () => {
     expect(svg).toHaveAttribute('height', '16')
   })
 
-  it('inherits the text color by default and uses the given color', () => {
+  it('uses the icon content token by default and uses the given color', () => {
     const { container, rerender } = render(<Icon name="Edit" />)
     const svg = container.querySelector('svg')
-    expect(svg).toHaveAttribute('fill', 'currentColor')
+    expect(svg).toHaveAttribute('fill', 'var(--color-icon-content)')
 
-    rerender(<Icon name="Edit" color="var(--color-badge-ongoing-text)" />)
-    expect(svg).toHaveAttribute('fill', 'var(--color-badge-ongoing-text)')
+    rerender(<Icon name="Edit" color="var(--color-badge-ongoing-content)" />)
+    expect(svg).toHaveAttribute('fill', 'var(--color-badge-ongoing-content)')
   })
 
   it('is hidden from screen readers when it has no label', () => {

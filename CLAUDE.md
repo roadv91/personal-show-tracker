@@ -59,8 +59,8 @@ tokens/         # design tokens exported from Figma (tokens.json), gitignored
 ## Design tokens
 
 - Figma variables are the source of truth. Export them to `tokens/tokens.json` (gitignored, local only), run `npm run build:tokens`, and commit the generated `src/styles/tokens.css`. Never edit `tokens.css` by hand.
-- Collections are `primitive/<mode>` and `semantic/<mode>` (currently only `light`). Primitives are `color/<hue>/<step>` (50–950, lightest to darkest). Semantic tokens are `<component>/<variant>/<property>[/<state>]` (e.g. `badge/ongoing/bg`), or `page/<property>` for page-level colors. Names are lowercase kebab-case.
-- Tailwind's default palette is disabled, so only semantic tokens exist as color utilities (e.g. `bg-page-bg`). Primitives are CSS variables only; don't use them in components. Add missing colors in Figma, not in CSS.
+- Collections are `primitive/<mode>` and `semantic/<mode>` (currently only `light`). Primitives are `color/<hue>/<step>` (50–950, lightest to darkest). Semantic tokens are `<component>[/<variant>]/<property>[/<state>]` (e.g. `badge/ongoing/surface`, `icon-button/content/disabled`), or `page/<property>` for page-level colors. Leave out the variant for components that have none. Use `surface` for backgrounds and `content` for text and icons, never `bg`/`text` (they produce classes like `bg-badge-ongoing-bg`). Names are lowercase kebab-case.
+- Tailwind's default palette is disabled, so only semantic tokens exist as color utilities (e.g. `bg-page-surface`). Primitives are CSS variables only; don't use them in components. Add missing colors in Figma, not in CSS.
 
 ## Coding conventions
 
