@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { Calendar } from './assets/calendar'
 import { Edit } from './assets/edit'
 import { Star } from './assets/star'
 import { StarFilled } from './assets/star-filled'
@@ -10,6 +11,7 @@ import { Trash } from './assets/trash'
  * Icons come from Unicons by IconScout (credited in the README).
  */
 export const iconComponentsMap = {
+  Calendar,
   Edit,
   Star,
   StarFilled,

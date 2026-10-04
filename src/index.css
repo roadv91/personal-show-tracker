@@ -3,6 +3,11 @@
 
 @theme {
   --font-sans: "Open Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Replace Tailwind's default breakpoints. Mobile is the default, so unprefixed classes apply to it. */
+  --breakpoint-*: initial;
+  --breakpoint-tablet: 48rem;
+  --breakpoint-desktop: 64rem;
 }
 
 @layer base {

@@ -15,6 +15,12 @@ export interface IconButtonProps {
    */
   size?: number
   /**
+   * Icon color. Accepts any CSS color, e.g. a design token (`var(--color-red-500)`).
+   * Ignored while the button is disabled, which always uses the disabled grey.
+   * The default is the `icon-button/content` token.
+   */
+  color?: string
+  /**
    * Disables the button.
    * @default false
    */
@@ -33,7 +39,7 @@ export interface IconButtonProps {
  * @param props - See {@link IconButtonProps}.
  * @returns The button element.
  */
-export const IconButton: FC<IconButtonProps> = ({ name, label, onClick, size = 24, disabled = false }) => (
+export const IconButton: FC<IconButtonProps> = ({ name, label, onClick, size = 24, color, disabled = false }) => (
   <button
     type="button"
     aria-label={label}
@@ -42,6 +48,6 @@ export const IconButton: FC<IconButtonProps> = ({ name, label, onClick, size = 2
     className="inline-flex min-h-8 min-w-8 cursor-pointer items-center justify-center rounded-sm text-icon-button-content enabled:hover:*:brightness-85 enabled:active:*:brightness-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-icon-button-focus-ring disabled:cursor-not-allowed disabled:text-icon-button-content-disabled"
   >
     {/* `currentColor` lets the button's text color (including the disabled color) reach the icon */}
-    <Icon name={name} size={size} color="currentColor" />
+    <Icon name={name} size={size} color={color && !disabled ? color : 'currentColor'} />
   </button>
 )
