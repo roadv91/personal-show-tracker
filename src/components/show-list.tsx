@@ -14,7 +14,7 @@ export interface ShowListProps {
 }
 
 /** Classes shared by every column header. */
-const columnHeaderClassName = `${showTableCellClassName} text-xs font-semibold tracking-wide text-neutral-500 uppercase`
+const columnHeaderClassName = `${showTableCellClassName} text-xs font-semibold tracking-wide text-neutral-600 uppercase`
 
 // TODO: Replace the hard-coded `#ffffff` background with a `color/white` primitive once it's added in Figma.
 /**
@@ -37,11 +37,12 @@ export const ShowList: FC<ShowListProps> = ({ shows, onEdit, onDelete }) => (
       ))}
     </ul>
 
-    <div className="hidden rounded-lg border border-neutral-200 bg-[#ffffff] shadow-sm tablet:block">
+    {/* overflow-hidden clips the header row's background to the rounded corners */}
+    <div className="hidden overflow-hidden rounded-lg border border-neutral-200 bg-[#ffffff] shadow-sm tablet:block">
       <table className="w-full text-sm">
         <caption className="sr-only">Your shows</caption>
         <thead>
-          <tr>
+          <tr className="bg-neutral-200">
             <th scope="col" className={`${columnHeaderClassName} text-left`}>Name</th>
             <th scope="col" className={`${columnHeaderClassName} text-left`}>Status</th>
             <th scope="col" className={`${columnHeaderClassName} text-left`}>Date Completed</th>
