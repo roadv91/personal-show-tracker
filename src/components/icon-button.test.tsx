@@ -27,6 +27,18 @@ describe('IconButton', () => {
     expect(handleClick).toHaveBeenCalledOnce()
   })
 
+  it('uses the given icon color, except while disabled', () => {
+    const { container, rerender } = render(<IconButton name="Trash" label="Delete show" />)
+    const svg = container.querySelector('svg')
+    expect(svg).toHaveAttribute('fill', 'currentColor')
+
+    rerender(<IconButton name="Trash" label="Delete show" color="var(--color-red-500)" />)
+    expect(svg).toHaveAttribute('fill', 'var(--color-red-500)')
+
+    rerender(<IconButton name="Trash" label="Delete show" color="var(--color-red-500)" disabled />)
+    expect(svg).toHaveAttribute('fill', 'currentColor')
+  })
+
   it('does not call onClick when disabled', async () => {
     const handleClick = vi.fn()
     render(<IconButton name="Trash" label="Delete show" onClick={handleClick} disabled />)
