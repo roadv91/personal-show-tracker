@@ -26,14 +26,18 @@ describe('ShowCard', () => {
   })
 
   it('leaves out the date and notes when the show has none', () => {
-    render(<ShowCard show={ongoingShow} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    const { container } = render(<ShowCard show={ongoingShow} onEdit={vi.fn()} onDelete={vi.fn()} />)
     expect(screen.queryByText(/Completed:/)).not.toBeInTheDocument()
+    expect(container.querySelector('time')).not.toBeInTheDocument()
     expect(screen.queryByText(/“/)).not.toBeInTheDocument()
   })
 
   it('leaves out the date when the show is not completed, even if it has one', () => {
-    render(<ShowCard show={{ ...ongoingShow, dateCompleted: '2025-01-01' }} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    const { container } = render(
+      <ShowCard show={{ ...ongoingShow, dateCompleted: '2025-01-01' }} onEdit={vi.fn()} onDelete={vi.fn()} />,
+    )
     expect(screen.queryByText(/Completed:/)).not.toBeInTheDocument()
+    expect(container.querySelector('time')).not.toBeInTheDocument()
   })
 
   it('calls onEdit and onDelete with the show', async () => {

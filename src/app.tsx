@@ -40,7 +40,7 @@ const sampleShows: Show[] = [
     dateCompleted: '2025-10-15',
     notes: 'Pure wholesome comfort food.',
   },
-  { id: '7', name: 'House of the Dragon', status: 'ongoing', rating: 4.1, notes: "Viserys S1 performance was epic." },
+  { id: '7', name: 'House of the Dragon', status: 'ongoing', rating: 4.1 },
 ]
 
 /**

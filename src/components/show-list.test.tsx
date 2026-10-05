@@ -28,9 +28,17 @@ describe('ShowList', () => {
     ])
   })
 
-  it('hides the cards from the tablet breakpoint up and the table below it', () => {
+  // jsdom can't evaluate media queries, so these check the responsive classes rather than real visibility
+  it('shows the cards and hides the table on mobile', () => {
+    render(<ShowList shows={shows} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    // Unprefixed classes apply on mobile
+    expect(screen.getByRole('list')).not.toHaveClass('hidden')
+    expect(screen.getByRole('table').parentElement).toHaveClass('hidden')
+  })
+
+  it('shows the table and hides the cards from the tablet breakpoint up', () => {
     render(<ShowList shows={shows} onEdit={vi.fn()} onDelete={vi.fn()} />)
     expect(screen.getByRole('list')).toHaveClass('tablet:hidden')
-    expect(screen.getByRole('table').parentElement).toHaveClass('hidden', 'tablet:block')
+    expect(screen.getByRole('table').parentElement).toHaveClass('tablet:block')
   })
 })
