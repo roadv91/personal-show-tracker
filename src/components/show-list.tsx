@@ -1,20 +1,26 @@
 import type { FC } from 'react'
-import type { Show } from '../types/show'
+import type { Show, ShowActionHandlers } from '../types/show'
 import { ShowCard } from './show-card'
 import { showTableCellClassName, ShowTableRow } from './show-table-row'
 
 /** Props for {@link ShowList}. */
-export interface ShowListProps {
+export interface ShowListProps extends ShowActionHandlers {
   /** The shows to list, in display order. */
   shows: Show[]
-  /** Called with a show when its edit button is clicked. */
-  onEdit: (show: Show) => void
-  /** Called with a show when its delete button is clicked. */
-  onDelete: (show: Show) => void
 }
 
 /** Classes shared by every column header. */
 const columnHeaderClassName = `${showTableCellClassName} text-xs font-semibold tracking-wide text-neutral-600 uppercase`
+
+/** The table's columns, in order. Only Actions is right-aligned, to sit above its buttons. */
+const columns = [
+  { label: 'Name', alignClassName: 'text-left' },
+  { label: 'Status', alignClassName: 'text-left' },
+  { label: 'Date Completed', alignClassName: 'text-left' },
+  { label: 'Rating', alignClassName: 'text-left' },
+  { label: 'Notes', alignClassName: 'text-left' },
+  { label: 'Actions', alignClassName: 'text-right' },
+]
 
 // TODO: Replace the hard-coded `#ffffff` background with a `color/white` primitive once it's added in Figma.
 /**
@@ -43,12 +49,11 @@ export const ShowList: FC<ShowListProps> = ({ shows, onEdit, onDelete }) => (
         <caption className="sr-only">Your shows</caption>
         <thead>
           <tr className="bg-neutral-200">
-            <th scope="col" className={`${columnHeaderClassName} text-left`}>Name</th>
-            <th scope="col" className={`${columnHeaderClassName} text-left`}>Status</th>
-            <th scope="col" className={`${columnHeaderClassName} text-left`}>Date Completed</th>
-            <th scope="col" className={`${columnHeaderClassName} text-left`}>Rating</th>
-            <th scope="col" className={`${columnHeaderClassName} text-left`}>Notes</th>
-            <th scope="col" className={`${columnHeaderClassName} text-right`}>Actions</th>
+            {columns.map((column) => (
+              <th key={column.label} scope="col" className={`${columnHeaderClassName} ${column.alignClassName}`}>
+                {column.label}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>

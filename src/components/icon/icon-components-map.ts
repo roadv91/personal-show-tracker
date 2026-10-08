@@ -1,6 +1,11 @@
 import type { FC } from 'react'
 import { Calendar } from './assets/calendar'
+import { ChevronDown } from './assets/chevron-down'
+import { ChevronUp } from './assets/chevron-up'
 import { Edit } from './assets/edit'
+import { Filter } from './assets/filter'
+import { Plus } from './assets/plus'
+import { Sort } from './assets/sort'
 import { Star } from './assets/star'
 import { StarFilled } from './assets/star-filled'
 import { Trash } from './assets/trash'
@@ -12,7 +17,12 @@ import { Trash } from './assets/trash'
  */
 export const iconComponentsMap = {
   Calendar,
+  ChevronDown,
+  ChevronUp,
   Edit,
+  Filter,
+  Plus,
+  Sort,
   Star,
   StarFilled,
   Trash,

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
-import type { Show } from '../types/show'
-import { ShowTableRow, type ShowTableRowProps } from './show-table-row'
+import type { Show, ShowItemProps } from '../types/show'
+import { ShowTableRow } from './show-table-row'
 
 const completedShow: Show = {
   id: '1',
@@ -16,7 +16,7 @@ const completedShow: Show = {
 const droppedShow: Show = { id: '2', name: 'The Witcher', status: 'dropped', rating: 2.5 }
 
 /** Renders the row inside the table elements it needs to be valid HTML. */
-const renderRow = (props: ShowTableRowProps) =>
+const renderRow = (props: ShowItemProps) =>
   render(
     <table>
       <tbody>
@@ -32,7 +32,7 @@ describe('ShowTableRow', () => {
     expect(screen.getByText('Completed')).toBeInTheDocument()
     expect(screen.getByText('Oct 15, 2025')).toBeInTheDocument()
     expect(screen.getByText('4.3', { exact: false })).toBeInTheDocument()
-    expect(screen.getByText('Pure wholesome comfort food.')).toBeInTheDocument()
+    expect(screen.getByText('“Pure wholesome comfort food.”')).toHaveClass('italic')
   })
 
   it.each<[string, Show]>([

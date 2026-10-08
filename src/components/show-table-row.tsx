@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import type { Show } from '../types/show'
+import type { ShowItemProps } from '../types/show'
 import { getCompletionDate } from '../utils/get-completion-date'
 import { FormattedDate } from './formatted-date'
 import { ShowActions } from './show-actions'
@@ -12,16 +12,6 @@ import { ShowStatusBadge } from './show-status-badge'
  */
 export const showTableCellClassName = 'px-3 py-3 desktop:px-4'
 
-/** Props for {@link ShowTableRow}. */
-export interface ShowTableRowProps {
-  /** The show to display. */
-  show: Show
-  /** Called with the show when its edit button is clicked. */
-  onEdit: (show: Show) => void
-  /** Called with the show when its delete button is clicked. */
-  onDelete: (show: Show) => void
-}
-
 /**
  * Table row showing one show, used in the tablet and desktop layout of {@link ShowList}.
  * Must be rendered inside a `<tbody>`.
@@ -30,15 +20,19 @@ export interface ShowTableRowProps {
  * The completion date only appears for completed shows that have one; otherwise the cell shows
  * a dash, which screen readers hear as "No completion date".
  *
- * @param props - See {@link ShowTableRowProps}.
+ * The name and notes wrap at spaces, and break inside a word only when it can't fit on a line.
+ * They use `wrap-anywhere` rather than `break-words` because in a table, only `anywhere` lets the
+ * column shrink below its longest word, so a long URL can't push the table wider than the screen.
+ *
+ * @param props - See {@link ShowItemProps}.
  * @returns The `<tr>` element.
  */
-export const ShowTableRow: FC<ShowTableRowProps> = ({ show, onEdit, onDelete }) => {
+export const ShowTableRow: FC<ShowItemProps> = ({ show, onEdit, onDelete }) => {
   const completionDate = getCompletionDate(show)
 
   return (
     <tr className="border-t border-neutral-200 align-middle">
-      <th scope="row" className={`${showTableCellClassName} text-left font-semibold break-words text-neutral-900`}>
+      <th scope="row" className={`${showTableCellClassName} text-left font-semibold wrap-anywhere text-neutral-900`}>
         {show.name}
       </th>
       <td className={showTableCellClassName}>
@@ -57,10 +51,12 @@ export const ShowTableRow: FC<ShowTableRowProps> = ({ show, onEdit, onDelete }) 
       <td className={showTableCellClassName}>
         <ShowRating rating={show.rating} />
       </td>
-      <td className={`${showTableCellClassName} break-words text-neutral-600`}>{show.notes}</td>
+      <td className={`${showTableCellClassName} wrap-anywhere text-neutral-600 italic`}>
+        {show.notes && `“${show.notes}”`}
+      </td>
       <td className={showTableCellClassName}>
         <div className="flex justify-end">
-          <ShowActions showName={show.name} onEdit={() => onEdit(show)} onDelete={() => onDelete(show)} />
+          <ShowActions show={show} onEdit={onEdit} onDelete={onDelete} />
         </div>
       </td>
     </tr>
