@@ -1,5 +1,6 @@
 import { useState, type FC } from 'react'
 import { ShowList } from './components/show-list'
+import { ShowListHeader } from './components/show-list-header'
 import type { Show } from './types/show'
 import './index.css'
 
@@ -41,13 +42,23 @@ const sampleShows: Show[] = [
     notes: 'Pure wholesome comfort food.',
   },
   { id: '7', name: 'House of the Dragon', status: 'ongoing', rating: 4.1 },
+  {
+    id: '8',
+    name: 'The Extraordinarily Long-Winded Chronicles of Supercalifragilisticexpialidocious Adventures in the Land of Neverending Season Finales',
+    status: 'completed',
+    rating: 3.9,
+    dateCompleted: '2026-01-31',
+    // 250 characters, the notes limit, including a long URL with no spaces
+    notes:
+      'Started strong but every episode ends on a cliffhanger. Full recap here: https://www.example.com/reviews/the-extraordinarily-long-winded-chronicles-season-one-finale-breakdown-and-theories so I would not forget. Worth it all for the soundtrack alone!',
+  },
 ]
 
 /**
  * Root component of the Personal Show Tracker app.
  *
- * Currently lists sample shows. Deleting removes a show until the page reloads;
- * editing only announces which show was picked, since there's no form yet.
+ * Currently lists sample shows. Deleting removes a show until the page reloads; editing, filtering,
+ * and adding only announce the click, since those features don't exist yet.
  *
  * @returns The top-level page layout.
  */
@@ -63,7 +74,11 @@ export const App: FC = () => {
 
   return (
     <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-6 px-4 py-8 tablet:px-8">
-      <h1 className="text-3xl font-bold text-neutral-900">Personal Show Tracker</h1>
+      <ShowListHeader
+        showCount={shows.length}
+        onFilter={() => setLastAction('Filter clicked')}
+        onAddShow={() => setLastAction('Add show clicked')}
+      />
       <ShowList shows={shows} onEdit={handleEdit} onDelete={handleDelete} />
       <p aria-live="polite" className="text-sm text-neutral-600">
         {lastAction}

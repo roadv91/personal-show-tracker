@@ -19,3 +19,17 @@ export interface Show {
   /** The user's notes on the show, up to 250 characters. */
   notes?: string
 }
+
+/** Handlers for the edit and delete buttons shown with each show. */
+export interface ShowActionHandlers {
+  /** Called with the show when its edit button is clicked. */
+  onEdit: (show: Show) => void
+  /** Called with the show when its delete button is clicked. */
+  onDelete: (show: Show) => void
+}
+
+/** Props for components that display one show with its edit and delete buttons. */
+export interface ShowItemProps extends ShowActionHandlers {
+  /** The show to display. */
+  show: Show
+}

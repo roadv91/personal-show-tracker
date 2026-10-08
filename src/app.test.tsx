@@ -5,6 +5,6 @@ import { App } from './app'
 describe('App', () => {
   it('renders the heading', () => {
     render(<App />)
-    expect(screen.getByRole('heading', { name: /personal show tracker/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'My Shows' })).toBeInTheDocument()
   })
 })
