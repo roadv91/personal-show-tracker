@@ -1,11 +1,11 @@
 import type { FC } from 'react'
-import type { ShowItemProps } from '../types/show'
-import { getCompletionDate } from '../utils/get-completion-date'
-import { FormattedDate } from './formatted-date'
-import { Icon } from './icon/icon'
-import { ShowActions } from './show-actions'
-import { ShowRating } from './show-rating'
-import { ShowStatusBadge } from './show-status-badge'
+import type { ShowItemProps } from '../../types/show'
+import { getCompletionDate } from '../../utils/get-completion-date'
+import { FormattedDate } from '../formatted-date/formatted-date'
+import { Icon } from '../icon/icon'
+import { ShowActions } from '../show-actions/show-actions'
+import { ShowRating } from '../show-rating/show-rating'
+import { ShowStatusBadge } from '../show-status-badge/show-status-badge'
 
 // TODO: Replace the hard-coded `#ffffff` background with a `color/white` primitive once it's added in Figma.
 /**

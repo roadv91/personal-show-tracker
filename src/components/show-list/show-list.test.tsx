@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
-import type { Show } from '../types/show'
+import type { Show } from '../../types/show'
 import { ShowList } from './show-list'
 
 const shows: Show[] = [

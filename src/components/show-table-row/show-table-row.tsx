@@ -1,10 +1,10 @@
 import type { FC } from 'react'
-import type { ShowItemProps } from '../types/show'
-import { getCompletionDate } from '../utils/get-completion-date'
-import { FormattedDate } from './formatted-date'
-import { ShowActions } from './show-actions'
-import { ShowRating } from './show-rating'
-import { ShowStatusBadge } from './show-status-badge'
+import type { ShowItemProps } from '../../types/show'
+import { getCompletionDate } from '../../utils/get-completion-date'
+import { FormattedDate } from '../formatted-date/formatted-date'
+import { ShowActions } from '../show-actions/show-actions'
+import { ShowRating } from '../show-rating/show-rating'
+import { ShowStatusBadge } from '../show-status-badge/show-status-badge'
 
 /**
  * Padding for every cell of the shows table, header cells included. Tighter on tablets so the

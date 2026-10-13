@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { Icon } from './icon/icon'
+import { Icon } from '../icon/icon'
 
 /** Props for {@link ShowRating}. */
 export interface ShowRatingProps {

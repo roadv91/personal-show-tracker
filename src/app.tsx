@@ -1,7 +1,10 @@
 import { useState, type FC } from 'react'
-import { ShowList } from './components/show-list'
-import { ShowListHeader } from './components/show-list-header'
+import { Header } from './components/header/header'
+import { ShowList } from './components/show-list/show-list'
+import { Title } from './components/title/title'
+import { Toolbar } from './components/toolbar/toolbar'
 import type { Show } from './types/show'
+import { formatShowCount } from './utils/format-show-count'
 import './index.css'
 
 // TODO: Remove the sample shows once shows can be added and stored.
@@ -73,16 +76,19 @@ export const App: FC = () => {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-6 px-4 py-8 tablet:px-8">
-      <ShowListHeader
-        showCount={shows.length}
-        onFilter={() => setLastAction('Filter clicked')}
-        onAddShow={() => setLastAction('Add show clicked')}
-      />
-      <ShowList shows={shows} onEdit={handleEdit} onDelete={handleDelete} />
-      <p aria-live="polite" className="text-sm text-neutral-600">
-        {lastAction}
-      </p>
-    </main>
+    <>
+      <Header onAddShow={() => setLastAction('Add show clicked')} />
+      <main className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 tablet:px-8">
+        {/* Mobile: title, then the toolbar below. Tablet and up: title left, toolbar right. */}
+        <div className="flex flex-col gap-4 tablet:flex-row tablet:items-center tablet:justify-between">
+          <Title title="My Shows" description={formatShowCount(shows.length)} />
+          <Toolbar onFilter={() => setLastAction('Filter clicked')} />
+        </div>
+        <ShowList shows={shows} onEdit={handleEdit} onDelete={handleDelete} />
+        <p aria-live="polite" className="text-sm text-neutral-600">
+          {lastAction}
+        </p>
+      </main>
+    </>
   )
 }

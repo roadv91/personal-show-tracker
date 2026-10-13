@@ -36,7 +36,7 @@ npm run check      # lint + build + test (run before committing)
 
 ```
 src/
-  components/   # shared UI (button, modal, show-card)
+  components/   # shared UI, one folder per component (button/, show-card/)
   hooks/        # shared hooks (use-shows)
   utils/        # pure helpers
   services/     # API calls, storage.ts (the single localStorage module)
@@ -51,6 +51,7 @@ scripts/        # dev/build scripts run with Node or the shell, not bundled into
 tokens/         # design tokens exported from Figma (tokens.json), gitignored
 ```
 
+- Each component gets its own folder in `src/components/`, named after it, holding the component, its test, and any files only it uses (e.g. `show-card/show-card.tsx` and `show-card/show-card.test.tsx`; `icon/` also holds `assets/`).
 - Unit tests sit next to the file they test, named `<file>.test.tsx` (e.g. `show-card.tsx` → `show-card.test.tsx`).
 - E2E tests go in the top-level `e2e/` folder, named `<name>.spec.ts`. Vitest only runs `src/**/*.test.{ts,tsx}`.
 - Scripts in `scripts/` use kebab-case names and start with a comment saying what they do and how to run them. Scripts run regularly get an `npm run` entry.

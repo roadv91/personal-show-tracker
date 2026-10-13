@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
-import type { Show } from '../types/show'
+import type { Show } from '../../types/show'
 import { ShowActions } from './show-actions'
 
 const show: Show = { id: '1', name: 'Severance', status: 'ongoing', rating: 4.8 }

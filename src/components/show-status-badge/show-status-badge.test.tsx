@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import type { ShowStatus } from '../types/show'
+import type { ShowStatus } from '../../types/show'
 import { ShowStatusBadge } from './show-status-badge'
 
 describe('ShowStatusBadge', () => {

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
-import type { Show, ShowItemProps } from '../types/show'
+import type { Show, ShowItemProps } from '../../types/show'
 import { ShowTableRow } from './show-table-row'
 
 const completedShow: Show = {

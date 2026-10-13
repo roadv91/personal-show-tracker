@@ -1,6 +1,6 @@
 import type { FC } from 'react'
-import type { ShowItemProps } from '../types/show'
-import { IconButton } from './icon-button'
+import type { ShowItemProps } from '../../types/show'
+import { IconButton } from '../icon-button/icon-button'
 
 /**
  * Edit and delete buttons for a show.
