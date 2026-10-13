@@ -1,16 +1,7 @@
 import { useId, type FC } from 'react'
 import { focusRingClassName } from '../../utils/class-names'
+import { defaultSortOption, sortOptions } from '../../utils/sort-options'
 import { Icon } from '../icon/icon'
-
-/** The ways shows can be sorted, with the text shown for each. */
-const sortOptions = [
-  { value: 'date-newest', label: 'Date: newest first' },
-  { value: 'date-oldest', label: 'Date: oldest first' },
-  { value: 'rating-highest', label: 'Rating: highest first' },
-  { value: 'rating-lowest', label: 'Rating: lowest first' },
-  { value: 'name-a-z', label: 'Name: A–Z' },
-  { value: 'name-z-a', label: 'Name: Z–A' },
-]
 
 // TODO: Make sorting work: control the value, report changes with an `onChange` prop, and sort the shows.
 // TODO: Create semantic tokens in Figma and use them instead of primitives and the hard-coded `#ffffff`.
@@ -34,7 +25,7 @@ export const ShowSortSelect: FC = () => {
       </label>
       <select
         id={selectId}
-        defaultValue="date-newest"
+        defaultValue={defaultSortOption}
         className={`min-h-11 w-full min-w-0 cursor-pointer appearance-none truncate rounded-lg border border-neutral-300 bg-[#ffffff] pr-9 pl-3 text-sm hover:bg-neutral-50 ${focusRingClassName}`}
       >
         {sortOptions.map((option) => (

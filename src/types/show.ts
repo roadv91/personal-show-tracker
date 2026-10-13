@@ -1,5 +1,8 @@
+/** Every status a show can have. Also used at runtime, e.g. to check saved data. */
+export const showStatuses = ['ongoing', 'completed', 'dropped'] as const
+
 /** Where the user is with a show. */
-export type ShowStatus = 'ongoing' | 'completed' | 'dropped'
+export type ShowStatus = (typeof showStatuses)[number]
 
 /** A show the user is tracking. */
 export interface Show {
@@ -19,6 +22,9 @@ export interface Show {
   /** The user's notes on the show, up to 250 characters. */
   notes?: string
 }
+
+/** A show without its ID, e.g. as entered in the add form. The ID is generated when it's added. */
+export type ShowInput = Omit<Show, 'id'>
 
 /** Handlers for the edit and delete buttons shown with each show. */
 export interface ShowActionHandlers {

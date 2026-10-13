@@ -28,7 +28,8 @@ npm run check      # lint + build + test (run before committing)
 - A Husky pre-commit hook (`.husky/pre-commit`, installed automatically by `npm install`) blocks commits made directly on `main`. Create a branch first.
 - Run `npm run check` before committing, not after every change. Don't open a PR if it fails.
 - Open PRs with `gh`, including a summary of changes, how to test, and "Closes #N" if there's a related issue.
-- Keep all localStorage access in a single storage module.
+- Keep all localStorage access in a single storage module (`src/services/storage.ts`).
+- App data lives in Redux (Redux Toolkit) in `src/store/`. Components use the typed `useAppSelector` / `useAppDispatch` hooks from `src/store/hooks.ts`. Temporary UI state (e.g. an on-screen message) stays in component state.
 - Never commit secrets; use environment variables.
 - Keep `languageOptions.ecmaVersion` in `eslint.config.js` in sync with `target` in `tsconfig.app.json` and `tsconfig.node.json`.
 
@@ -39,6 +40,7 @@ src/
   components/   # shared UI, one folder per component (button/, show-card/)
   hooks/        # shared hooks (use-shows)
   utils/        # pure helpers
+  store/        # Redux store, slices, and typed hooks
   services/     # API calls, storage.ts (the single localStorage module)
   types/        # shared TS types
   pages/        # route-level screens, if routing is added
