@@ -1,16 +1,12 @@
 import type { FC } from 'react'
-import type { Show } from '../types/show'
-import { ShowCard } from './show-card'
-import { showTableCellClassName, ShowTableRow } from './show-table-row'
+import type { Show, ShowActionHandlers } from '../../types/show'
+import { ShowCard } from '../show-card/show-card'
+import { showTableCellClassName, ShowTableRow } from '../show-table-row/show-table-row'
 
 /** Props for {@link ShowList}. */
-export interface ShowListProps {
+export interface ShowListProps extends ShowActionHandlers {
   /** The shows to list, in display order. */
   shows: Show[]
-  /** Called with a show when its edit button is clicked. */
-  onEdit: (show: Show) => void
-  /** Called with a show when its delete button is clicked. */
-  onDelete: (show: Show) => void
 }
 
 /** Classes shared by every column header. */

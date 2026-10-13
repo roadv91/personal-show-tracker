@@ -1,5 +1,5 @@
 import type { FC, MouseEventHandler } from 'react'
-import { Icon, type IconName } from './icon/icon'
+import { Icon, type IconName } from '../icon/icon'
 
 /** Props for {@link IconButton}. */
 export interface IconButtonProps {

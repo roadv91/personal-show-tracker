@@ -1,6 +1,6 @@
 import type { FC } from 'react'
-import type { ShowStatus } from '../types/show'
-import { Badge } from './badge'
+import type { ShowStatus } from '../../types/show'
+import { Badge } from '../badge/badge'
 
 /** Label shown for each status. */
 const statusLabels: Record<ShowStatus, string> = {
