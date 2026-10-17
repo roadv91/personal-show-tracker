@@ -1,28 +1,28 @@
 import { combineSlices, configureStore } from '@reduxjs/toolkit'
 import { loadShows, loadSortOption, saveShows, saveSortOption } from '../services/storage'
 import { showsSlice } from './shows-slice'
-import { sortSlice } from './sort-slice'
 
-/** Combines every slice into the app's single reducer. */
-const rootReducer = combineSlices(showsSlice, sortSlice)
+/** Combines every slice into the app's single reducer. Add new slices here. */
+const rootReducer = combineSlices(showsSlice)
 
-/** The whole app state: `{ shows, sort }`. */
+/** The whole app state: `{ shows: { shows, sortMethod } }`. */
 export type RootState = ReturnType<typeof rootReducer>
 
 /**
- * Loads what was saved last time. Only the parts that are saved are included; anything missing
- * starts from its slice's initial state (no shows, `date-newest`).
+ * Loads what was saved last time. Anything that isn't saved starts from the slice's initial state
+ * (no shows, `date-newest`).
  *
- * @returns The saved state.
+ * @returns The state to start the store with.
  * @throws If the saved data is invalid, or the browser blocks access to storage.
  */
-const loadSavedState = (): Partial<RootState> => {
-  const savedState: Partial<RootState> = {}
-  const savedShows = loadShows()
-  if (savedShows) savedState.shows = savedShows
-  const savedSortOption = loadSortOption()
-  if (savedSortOption) savedState.sort = savedSortOption
-  return savedState
+const loadSavedState = (): RootState => {
+  const initialShowsState = showsSlice.getInitialState()
+  return {
+    shows: {
+      shows: loadShows() ?? initialShowsState.shows,
+      sortMethod: loadSortOption() ?? initialShowsState.sortMethod,
+    },
+  }
 }
 
 /**
@@ -44,7 +44,7 @@ export type AppStore = ReturnType<typeof createAppStore>
 export type AppDispatch = AppStore['dispatch']
 
 /**
- * Saves the shows and the sort choice whenever they change.
+ * Saves the shows and the sort method whenever they change.
  * Side effect: subscribes to the store and writes to localStorage through the storage module.
  *
  * Each part is only saved when it actually changed, so e.g. changing the sort doesn't rewrite every show.
@@ -55,17 +55,17 @@ export type AppDispatch = AppStore['dispatch']
  * @returns A function that stops saving.
  */
 export const saveStateOnChange = (store: AppStore): (() => void) => {
-  let { shows: lastSavedShows, sort: lastSavedSortOption } = store.getState()
+  let { shows: lastSavedShows, sortMethod: lastSavedSortMethod } = store.getState().shows
 
   return store.subscribe(() => {
-    const { shows, sort } = store.getState()
+    const { shows, sortMethod } = store.getState().shows
     if (shows !== lastSavedShows) {
       lastSavedShows = shows
       saveShows(shows)
     }
-    if (sort !== lastSavedSortOption) {
-      lastSavedSortOption = sort
-      saveSortOption(sort)
+    if (sortMethod !== lastSavedSortMethod) {
+      lastSavedSortMethod = sortMethod
+      saveSortOption(sortMethod)
     }
   })
 }

@@ -5,7 +5,7 @@ import { ShowList } from './components/show-list/show-list'
 import { Title } from './components/title/title'
 import { Toolbar } from './components/toolbar/toolbar'
 import { useAppDispatch, useAppSelector } from './store/hooks'
-import { deleteShow, selectShows } from './store/shows-slice'
+import { deleteShow } from './store/shows-slice'
 import { createAppStore, saveStateOnChange } from './store/store'
 import type { Show } from './types/show'
 import { formatShowCount } from './utils/format-show-count'
@@ -21,7 +21,7 @@ import './index.css'
  * @returns The page layout.
  */
 const AppContent: FC = () => {
-  const showCount = useAppSelector(selectShows).length
+  const showCount = useAppSelector(state => state.shows.shows.length)
   const dispatch = useAppDispatch()
   // A temporary on-screen message about the last click, not app data, so it stays out of the store
   const [lastAction, setLastAction] = useState('')

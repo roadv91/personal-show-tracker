@@ -2,7 +2,8 @@ import { render } from '@testing-library/react'
 import type { ReactElement } from 'react'
 import { Provider } from 'react-redux'
 import { saveShows, saveSortOption } from '../services/storage'
-import { createAppStore, type RootState } from '../store/store'
+import type { ShowsState } from '../store/shows-slice'
+import { createAppStore } from '../store/store'
 
 /**
  * Renders a component inside a Redux `Provider` with its own fresh store, so tests don't share state.
@@ -14,9 +15,9 @@ import { createAppStore, type RootState } from '../store/store'
  * @param savedState - Data to save before the store is created, e.g. `{ shows: [...] }`.
  * @returns Testing Library's render result, plus the store so tests can dispatch or read state.
  */
-export const renderWithStore = (ui: ReactElement, savedState: Partial<RootState> = {}) => {
+export const renderWithStore = (ui: ReactElement, savedState: Partial<ShowsState> = {}) => {
   if (savedState.shows) saveShows(savedState.shows)
-  if (savedState.sort) saveSortOption(savedState.sort)
+  if (savedState.sortMethod) saveSortOption(savedState.sortMethod)
   const store = createAppStore()
   return { store, ...render(<Provider store={store}>{ui}</Provider>) }
 }

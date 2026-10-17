@@ -1,6 +1,6 @@
 /**
  * The ways shows can be sorted, with the text shown for each. The single source of truth for
- * both the `sort` slice and `ShowSortSelect`, so they can't drift apart.
+ * the shows slice's `sortMethod` and `ShowSortSelect`, so they can't drift apart.
  */
 export const sortOptions = [
   { value: 'date-newest', label: 'Date: newest first' },
@@ -13,9 +13,6 @@ export const sortOptions = [
 
 /** A sort choice, e.g. `date-newest`. */
 export type SortOption = (typeof sortOptions)[number]['value']
-
-/** The sort choice used until the user picks another. */
-export const defaultSortOption: SortOption = 'date-newest'
 
 /**
  * Checks whether a value is one of the {@link sortOptions}, e.g. when reading saved data.

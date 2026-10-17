@@ -1,33 +1,58 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { Show, ShowInput } from '../types/show'
+import type { SortOption } from '../utils/sort-options'
 
-/** The `shows` slice: the list of shows the user is tracking, in the order they were added. */
+/** The data the `shows` slice holds. */
+export interface ShowsState {
+  /** The shows the user is tracking, in the order they were added. */
+  shows: Show[]
+  /** How the user wants the shows sorted. Not applied to the list yet. */
+  sortMethod: SortOption
+}
+
+/**
+ * No shows until the user adds some, sorted newest first. This is the only place these defaults are
+ * defined; saved data replaces them through the store's preloaded state.
+ */
+const initialState: ShowsState = {
+  shows: [],
+  sortMethod: 'date-newest',
+}
+
+/** The `shows` slice: the user's shows, plus how they want them sorted. */
 export const showsSlice = createSlice({
   name: 'shows',
-  // No shows until the user adds some; saved shows replace this through the store's preloaded state
-  initialState: [] as Show[],
+  initialState,
   reducers: {
     /** Adds a show to the end of the list, giving it a new unique ID. */
     addShow: {
-      reducer: (shows, action: PayloadAction<Show>) => {
-        shows.push(action.payload)
+      reducer: (state, action: PayloadAction<Show>) => {
+        state.shows.push(action.payload)
       },
       // The ID is generated here, not in the reducer, because reducers must not be random
       prepare: (showInput: ShowInput) => ({ payload: { ...showInput, id: crypto.randomUUID() } }),
     },
     /** Replaces the show that has the same ID. Does nothing if there's no such show. */
-    updateShow: (shows, action: PayloadAction<Show>) => {
-      const index = shows.findIndex((show) => show.id === action.payload.id)
-      if (index !== -1) shows[index] = action.payload
+    updateShow: (state, action: PayloadAction<Show>) => {
+      const index = state.shows.findIndex((show) => show.id === action.payload.id)
+      if (index !== -1) state.shows[index] = action.payload
     },
     /** Removes the show with the given ID. */
-    deleteShow: (shows, action: PayloadAction<string>) => shows.filter((show) => show.id !== action.payload),
+    deleteShow: (state, action: PayloadAction<string>) => {
+      state.shows = state.shows.filter((show) => show.id !== action.payload)
+    },
+    /** Changes how the shows are sorted. */
+    setSortMethod: (state, action: PayloadAction<SortOption>) => {
+      state.sortMethod = action.payload
+    },
   },
   selectors: {
     /** All shows, in the order they were added. */
-    selectShows: (shows) => shows,
+    selectShows: (state) => state.shows,
+    /** How the user wants the shows sorted. */
+    selectSortMethod: (state) => state.sortMethod,
   },
 })
 
-export const { addShow, updateShow, deleteShow } = showsSlice.actions
-export const { selectShows } = showsSlice.selectors
+export const { addShow, updateShow, deleteShow, setSortMethod } = showsSlice.actions
+export const { selectShows, selectSortMethod } = showsSlice.selectors
