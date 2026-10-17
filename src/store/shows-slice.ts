@@ -1,12 +1,13 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import { createSelector, createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { Show, ShowInput } from '../types/show'
 import type { SortOption } from '../utils/sort-options'
+import { sortShows } from '../utils/sort-shows'
 
 /** The data the `shows` slice holds. */
 export interface ShowsState {
   /** The shows the user is tracking, in the order they were added. */
   shows: Show[]
-  /** How the user wants the shows sorted. Not applied to the list yet. */
+  /** How the user wants the shows sorted. Applied when reading, see `selectSortedShows`. */
   sortMethod: SortOption
 }
 
@@ -56,3 +57,9 @@ export const showsSlice = createSlice({
 
 export const { addShow, updateShow, deleteShow, setSortMethod } = showsSlice.actions
 export const { selectShows, selectSortMethod } = showsSlice.selectors
+
+/**
+ * The shows sorted by the current sort method. Memoized, so it returns the same array until the
+ * shows or the sort method change. The stored list is left in the order shows were added.
+ */
+export const selectSortedShows = createSelector([selectShows, selectSortMethod], sortShows)
