@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Show } from '../types/show'
 import { loadShows, loadSortOption, saveShows, saveSortOption, storageKeys } from './storage'
 
@@ -7,7 +7,6 @@ const shows: Show[] = [
   { id: '2', name: 'Breaking Bad', status: 'completed', rating: 4.7, dateCompleted: '2024-08-12' },
 ]
 
-beforeEach(() => localStorage.clear())
 afterEach(() => vi.restoreAllMocks())
 
 describe('shows', () => {

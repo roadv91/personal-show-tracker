@@ -30,6 +30,7 @@ npm run check      # lint + build + test (run before committing)
 - Open PRs with `gh`, including a summary of changes, how to test, and "Closes #N" if there's a related issue.
 - Keep all localStorage access in a single storage module (`src/services/storage.ts`).
 - App data lives in Redux (Redux Toolkit) in `src/store/`. Components use the typed `useAppSelector` / `useAppDispatch` hooks from `src/store/hooks.ts`. Temporary UI state (e.g. an on-screen message) stays in component state.
+- Saved data has a single source of truth: the store only gets data from the persistence layer (`createAppStore()` loads it from storage; later, from the API). Don't add other ways to give the store starting data. Tests set up data by saving it first (`renderWithStore` does this).
 - Never commit secrets; use environment variables.
 - Keep `languageOptions.ecmaVersion` in `eslint.config.js` in sync with `target` in `tsconfig.app.json` and `tsconfig.node.json`.
 

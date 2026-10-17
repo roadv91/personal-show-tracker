@@ -1,18 +1,15 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { App } from './app'
 import { loadShows, saveShows, storageKeys } from './services/storage'
-import { sampleShows } from './store/sample-shows'
 import type { Show } from './types/show'
-import { formatShowCount } from './utils/format-show-count'
 
 const shows: Show[] = [
   { id: '1', name: 'Severance', status: 'ongoing', rating: 4.8 },
   { id: '2', name: 'Breaking Bad', status: 'completed', rating: 4.7 },
 ]
 
-beforeEach(() => localStorage.clear())
 afterEach(() => vi.restoreAllMocks())
 
 describe('App', () => {
@@ -21,9 +18,9 @@ describe('App', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'My Shows' })).toBeInTheDocument()
   })
 
-  it('starts with the sample shows when nothing is saved', () => {
+  it('starts with no shows when nothing is saved', () => {
     render(<App />)
-    expect(screen.getByText(formatShowCount(sampleShows.length))).toBeInTheDocument()
+    expect(screen.getByText('0 shows')).toBeInTheDocument()
   })
 
   it('deletes a show, updates the count, and saves the change', async () => {

@@ -6,7 +6,7 @@ import { Title } from './components/title/title'
 import { Toolbar } from './components/toolbar/toolbar'
 import { useAppDispatch, useAppSelector } from './store/hooks'
 import { deleteShow, selectShows } from './store/shows-slice'
-import { createAppStore, loadInitialState, saveStateOnChange } from './store/store'
+import { createAppStore, saveStateOnChange } from './store/store'
 import type { Show } from './types/show'
 import { formatShowCount } from './utils/format-show-count'
 import './index.css'
@@ -63,7 +63,7 @@ const AppContent: FC = () => {
  */
 export const App: FC = () => {
   // The lazy initializer runs only on the first render, so the saved state is loaded once
-  const [store] = useState(() => createAppStore(loadInitialState()))
+  const [store] = useState(() => createAppStore())
   // Returning the unsubscribe function stops saving when App unmounts
   useEffect(() => saveStateOnChange(store), [store])
 

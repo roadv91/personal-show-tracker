@@ -4,7 +4,7 @@ import type { Show, ShowInput } from '../types/show'
 /** The `shows` slice: the list of shows the user is tracking, in the order they were added. */
 export const showsSlice = createSlice({
   name: 'shows',
-  // The real starting list comes from the store's preloaded state (saved shows or the samples)
+  // No shows until the user adds some; saved shows replace this through the store's preloaded state
   initialState: [] as Show[],
   reducers: {
     /** Adds a show to the end of the list, giving it a new unique ID. */
