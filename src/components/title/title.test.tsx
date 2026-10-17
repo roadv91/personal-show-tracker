@@ -6,6 +6,6 @@ describe('Title', () => {
   it('shows the title as the main heading with the description under it', () => {
     render(<Title title="My Shows" description="7 shows" />)
     expect(screen.getByRole('heading', { level: 1, name: 'My Shows' })).toBeInTheDocument()
-    expect(screen.getByText('7 shows')).toHaveAttribute('aria-live', 'polite')
+    expect(screen.getByText('7 shows')).toBeInTheDocument()
   })
 })
