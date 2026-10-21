@@ -1,4 +1,4 @@
-import type { FC } from 'react'
+import { useId, type FC } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { selectSortedShows, selectSortMethod, setSortMethod } from '../../store/shows-slice'
 import type { ShowActionHandlers } from '../../types/show'
@@ -8,10 +8,10 @@ import { showTableCellSidePaddingClassName, ShowTableRow } from '../show-table-r
 import { SortableColumnHeader } from '../sortable-column-header/sortable-column-header'
 
 /**
- * Classes shared by every column header. No top or bottom padding: the 44px sort buttons set the
- * row's height.
+ * Classes shared by every column header. The 44px sort buttons set the row's height; the 2px top
+ * and bottom padding leaves room for their focus ring, so the table doesn't clip it.
  */
-const columnHeaderClassName = `${showTableCellSidePaddingClassName} text-xs font-semibold tracking-wide text-neutral-600 uppercase`
+const columnHeaderClassName = `${showTableCellSidePaddingClassName} py-0.5 text-xs font-semibold tracking-wide text-neutral-600 uppercase`
 
 // TODO: Replace the hard-coded `#ffffff` background with a `color/white` primitive once it's added in Figma.
 /**
@@ -32,6 +32,7 @@ export const ShowList: FC<ShowActionHandlers> = ({ onEdit, onDelete }) => {
   const sortMethod = useAppSelector(selectSortMethod)
   const dispatch = useAppDispatch()
   const sortState = getSortState(sortMethod)
+  const sortDescriptionId = useId()
 
   /** Renders a sortable header for a column, marking it if the shows are sorted by it. */
   const renderSortableHeader = (column: SortColumn, label: string) => (
@@ -39,6 +40,7 @@ export const ShowList: FC<ShowActionHandlers> = ({ onEdit, onDelete }) => {
       label={label}
       direction={sortState.column === column ? sortState.direction : undefined}
       onSort={() => dispatch(setSortMethod(getNextSortOption(sortMethod, column)))}
+      descriptionId={sortDescriptionId}
       className={`${columnHeaderClassName} text-left`}
     />
   )
@@ -56,8 +58,14 @@ export const ShowList: FC<ShowActionHandlers> = ({ onEdit, onDelete }) => {
 
       {/* overflow-hidden clips the header row's background to the rounded corners */}
       <div className="hidden overflow-hidden rounded-lg border border-neutral-200 bg-[#ffffff] shadow-sm tablet:block">
+        {/* Read as the sort buttons' description. Outside the table, so it doesn't become part of
+            a column header's name; `hidden` keeps it off screen, and descriptions still work. */}
+        <span id={sortDescriptionId} hidden>
+          Sorts the shows by this column
+        </span>
         <table className="w-full text-sm">
-          <caption className="sr-only">Your shows</caption>
+          {/* Matches the page heading, so screen readers name the table the same thing users see */}
+          <caption className="sr-only">My Shows</caption>
           <thead>
             <tr className="bg-neutral-200">
               {renderSortableHeader('name', 'Name')}

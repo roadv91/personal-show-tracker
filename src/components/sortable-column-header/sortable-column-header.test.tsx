@@ -3,16 +3,21 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { SortableColumnHeader } from './sortable-column-header'
 
-/** Renders the header inside a table, as it's used in the app. */
+/** Renders the header inside a table, as it's used in the app, with a description outside the table. */
 const renderHeader = (direction?: 'ascending' | 'descending', onSort = vi.fn()) =>
   render(
-    <table>
-      <thead>
-        <tr>
-          <SortableColumnHeader label="Name" direction={direction} onSort={onSort} />
-        </tr>
-      </thead>
-    </table>,
+    <>
+      <span id="sort-description" hidden>
+        Sorts the shows by this column
+      </span>
+      <table>
+        <thead>
+          <tr>
+            <SortableColumnHeader label="Name" direction={direction} onSort={onSort} descriptionId="sort-description" />
+          </tr>
+        </thead>
+      </table>
+    </>,
   )
 
 describe('SortableColumnHeader', () => {
@@ -20,6 +25,12 @@ describe('SortableColumnHeader', () => {
     const { container } = renderHeader()
     expect(screen.getByRole('button', { name: 'Name' })).toBeInTheDocument()
     expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true')
+  })
+
+  it('describes what the button does without changing the column header name', () => {
+    renderHeader()
+    expect(screen.getByRole('button', { name: 'Name' })).toHaveAccessibleDescription('Sorts the shows by this column')
+    expect(screen.getByRole('columnheader', { name: 'Name' })).toBeInTheDocument()
   })
 
   it.each([undefined, 'ascending', 'descending'] as const)('sets aria-sort to match the direction (%s)', (direction) => {

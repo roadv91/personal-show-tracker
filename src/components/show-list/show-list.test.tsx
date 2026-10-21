@@ -27,7 +27,7 @@ describe('ShowList', () => {
 
   it('renders a table with a header row and a row per show', () => {
     renderList()
-    const table = screen.getByRole('table', { name: 'Your shows' })
+    const table = screen.getByRole('table', { name: 'My Shows' })
     const columnNames = within(table).getAllByRole('columnheader').map((header) => header.textContent)
     expect(columnNames).toEqual(['Name', 'Status', 'Date Completed', 'Rating', 'Notes', 'Actions'])
     expect(within(table).getAllByRole('rowheader').map((header) => header.textContent)).toEqual([
