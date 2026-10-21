@@ -1,0 +1,50 @@
+# Builds the app and publishes it to GitHub Pages (https://roadv91.github.io/personal-show-tracker/)
+# whenever main changes. It can also be run by hand from the repo's Actions tab.
+# Lint, type-check, build, and tests must all pass (npm run check), so a broken build is never published.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Pages deployments need permission to write to Pages and to prove the workflow's identity
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deployment at a time; a newer push waits instead of cancelling one in progress
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # Lint, type-check and build, then run the tests; the build output is in dist/
+      - run: npm run check
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
