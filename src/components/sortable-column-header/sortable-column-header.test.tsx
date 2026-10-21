@@ -29,14 +29,15 @@ describe('SortableColumnHeader', () => {
     else expect(header).not.toHaveAttribute('aria-sort')
   })
 
-  it('calls onSort on click, Enter, and Space', async () => {
+  it('can be reached with Tab and calls onSort on Enter, Space, and click', async () => {
     const onSort = vi.fn()
     const user = userEvent.setup()
     renderHeader(undefined, onSort)
-    await user.click(screen.getByRole('button'))
     await user.tab()
+    expect(screen.getByRole('button', { name: 'Name' })).toHaveFocus()
     await user.keyboard('{Enter}')
     await user.keyboard(' ')
+    await user.click(screen.getByRole('button'))
     expect(onSort).toHaveBeenCalledTimes(3)
   })
 })

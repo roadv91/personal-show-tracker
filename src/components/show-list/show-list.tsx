@@ -4,11 +4,14 @@ import { selectSortedShows, selectSortMethod, setSortMethod } from '../../store/
 import type { ShowActionHandlers } from '../../types/show'
 import { getNextSortOption, getSortState, type SortColumn } from '../../utils/sort-shows'
 import { ShowCard } from '../show-card/show-card'
-import { showTableCellClassName, ShowTableRow } from '../show-table-row/show-table-row'
+import { showTableCellSidePaddingClassName, ShowTableRow } from '../show-table-row/show-table-row'
 import { SortableColumnHeader } from '../sortable-column-header/sortable-column-header'
 
-/** Classes shared by every column header. */
-const columnHeaderClassName = `${showTableCellClassName} text-xs font-semibold tracking-wide text-neutral-600 uppercase`
+/**
+ * Classes shared by every column header. No top or bottom padding: the 44px sort buttons set the
+ * row's height.
+ */
+const columnHeaderClassName = `${showTableCellSidePaddingClassName} text-xs font-semibold tracking-wide text-neutral-600 uppercase`
 
 // TODO: Replace the hard-coded `#ffffff` background with a `color/white` primitive once it's added in Figma.
 /**

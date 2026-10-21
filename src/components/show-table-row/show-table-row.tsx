@@ -7,10 +7,13 @@ import { ShowRating } from '../show-rating/show-rating'
 import { ShowStatusBadge } from '../show-status-badge/show-status-badge'
 
 /**
- * Padding for every cell of the shows table, header cells included. Tighter on tablets so the
+ * Side padding for every cell of the shows table, header cells included. Tighter on tablets so the
  * six columns fit from the `tablet` breakpoint up without overflowing.
  */
-export const showTableCellClassName = 'px-3 py-3 desktop:px-4'
+export const showTableCellSidePaddingClassName = 'px-3 desktop:px-4'
+
+/** Padding for the body cells of the shows table. */
+const showTableCellClassName = `${showTableCellSidePaddingClassName} py-3`
 
 /**
  * Table row showing one show, used in the tablet and desktop layout of {@link ShowList}.

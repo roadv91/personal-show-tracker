@@ -37,7 +37,7 @@ export const SortableColumnHeader: FC<SortableColumnHeaderProps> = ({ label, dir
     <button
       type="button"
       onClick={onSort}
-      className={`-mx-1 inline-flex min-h-6 cursor-pointer items-center gap-1 rounded px-1 uppercase hover:text-neutral-900 ${focusRingClassName}`}
+      className={`inline-flex min-h-11 min-w-11 cursor-pointer items-center gap-1 rounded uppercase hover:text-neutral-900 ${focusRingClassName}`}
     >
       {label}
       <Icon name={iconNames[direction ?? 'none']} size={16} color="currentColor" />
