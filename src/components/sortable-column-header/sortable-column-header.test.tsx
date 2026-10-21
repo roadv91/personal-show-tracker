@@ -1,0 +1,54 @@
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
+import { SortableColumnHeader } from './sortable-column-header'
+
+/** Renders the header inside a table, as it's used in the app, with a description outside the table. */
+const renderHeader = (direction?: 'ascending' | 'descending', onSort = vi.fn()) =>
+  render(
+    <>
+      <span id="sort-description" hidden>
+        Sorts the shows by this column
+      </span>
+      <table>
+        <thead>
+          <tr>
+            <SortableColumnHeader label="Name" direction={direction} onSort={onSort} descriptionId="sort-description" />
+          </tr>
+        </thead>
+      </table>
+    </>,
+  )
+
+describe('SortableColumnHeader', () => {
+  it('has a button named after the column, and hides the icon from screen readers', () => {
+    const { container } = renderHeader()
+    expect(screen.getByRole('button', { name: 'Name' })).toBeInTheDocument()
+    expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true')
+  })
+
+  it('describes what the button does without changing the column header name', () => {
+    renderHeader()
+    expect(screen.getByRole('button', { name: 'Name' })).toHaveAccessibleDescription('Sorts the shows by this column')
+    expect(screen.getByRole('columnheader', { name: 'Name' })).toBeInTheDocument()
+  })
+
+  it.each([undefined, 'ascending', 'descending'] as const)('sets aria-sort to match the direction (%s)', (direction) => {
+    renderHeader(direction)
+    const header = screen.getByRole('columnheader')
+    if (direction) expect(header).toHaveAttribute('aria-sort', direction)
+    else expect(header).not.toHaveAttribute('aria-sort')
+  })
+
+  it('can be reached with Tab and calls onSort on Enter, Space, and click', async () => {
+    const onSort = vi.fn()
+    const user = userEvent.setup()
+    renderHeader(undefined, onSort)
+    await user.tab()
+    expect(screen.getByRole('button', { name: 'Name' })).toHaveFocus()
+    await user.keyboard('{Enter}')
+    await user.keyboard(' ')
+    await user.click(screen.getByRole('button'))
+    expect(onSort).toHaveBeenCalledTimes(3)
+  })
+})
