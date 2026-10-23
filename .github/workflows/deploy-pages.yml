@@ -25,13 +25,12 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # Node and npm versions come from devEngines in package.json, so CI matches local development
+      # The Node version comes from devEngines in package.json, so CI matches local development.
+      # npm comes bundled with that Node, so devEngines pins npm to the bundled version.
       - uses: actions/setup-node@v7
         with:
           node-version-file: package.json
           cache: npm
-
-      - run: npm install -g npm@$(node -p "require('./package.json').devEngines.packageManager.version")
 
       - run: npm ci
 
