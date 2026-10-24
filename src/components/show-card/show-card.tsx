@@ -12,9 +12,8 @@ import { ShowStatusBadge } from '../show-status-badge/show-status-badge'
  * (with the completion date, for completed shows that have one), rating, edit and delete buttons
  * (vertically centered beside the details), and the notes if there are any.
  *
- * Below the `large-phone` breakpoint (390px) the spacing tightens and the rating stacks above the
- * status badge, leaving more room for the name. The badge comes first in the markup, so screen
- * readers always read the status before the rating.
+ * Below the `large-phone` breakpoint (390px) the spacing tightens and the rating stacks below the
+ * status badge, leaving more room for the name.
  *
  * Long names and notes wrap at spaces, and break inside a word only when it can't fit on a line.
  * `wrap-anywhere` (not `break-words`) lets the heading shrink below its longest word, so a long
@@ -28,7 +27,7 @@ export const ShowCard: FC<ShowItemProps> = ({ show, onEdit, onDelete }) => (
     <div className="flex items-center justify-between">
       <div className="flex min-w-0 flex-1 flex-col gap-3 pr-4 large-phone:gap-4">
         <h2 className="text-sm font-bold wrap-anywhere text-neutral-900">{show.name}</h2>
-        <div className="flex flex-col-reverse items-start gap-2 large-phone:flex-row large-phone:flex-wrap large-phone:items-center">
+        <div className="flex flex-col items-start gap-2 large-phone:flex-row large-phone:flex-wrap large-phone:items-center">
           <ShowStatusBadge status={show.status} completionDate={getCompletionDate(show)} />
           <ShowRating rating={show.rating} />
         </div>
