@@ -12,4 +12,10 @@ describe('ShowStatusBadge', () => {
     render(<ShowStatusBadge status={status} />)
     expect(screen.getByText(label)).toHaveClass(className)
   })
+
+  it('adds the completion date when given', () => {
+    const { container } = render(<ShowStatusBadge status="completed" completionDate="2025-05-28" />)
+    expect(container).toHaveTextContent('Completed: May 28, 2025')
+    expect(screen.getByText('May 28, 2025')).toHaveAttribute('dateTime', '2025-05-28')
+  })
 })

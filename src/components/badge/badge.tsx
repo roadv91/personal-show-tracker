@@ -1,4 +1,4 @@
-import type { FC } from 'react'
+import type { FC, ReactNode } from 'react'
 
 /** Types of badge, matching the `badge/<type>` design tokens. */
 export type BadgeType = 'ongoing' | 'completed' | 'dropped'
@@ -14,21 +14,25 @@ const typeClassNames: Record<BadgeType, string> = {
 export interface BadgeProps {
   /** Type of the badge, which sets its colors. */
   type: BadgeType
-  /** Text shown inside the badge. */
-  label: string
+  /**
+   * Content of the badge: plain text, or several elements (e.g. a label and a date), which can
+   * wrap onto separate lines when there isn't room for them side by side.
+   */
+  label: ReactNode
 }
 
 /**
  * Small pill-shaped label, e.g. for showing a show's watch status.
  *
- * The width hugs the label and the label never wraps.
+ * The width hugs the label. Text never wraps within itself; a label made of several elements only
+ * wraps between them, turning the pill into two lines on very narrow screens.
  *
  * @param props - See {@link BadgeProps}.
  * @returns The badge element.
  */
 export const Badge: FC<BadgeProps> = ({ type, label }) => (
   <span
-    className={`inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold ${typeClassNames[type]}`}
+    className={`inline-flex flex-wrap items-center gap-x-1 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold ${typeClassNames[type]}`}
   >
     {label}
   </span>

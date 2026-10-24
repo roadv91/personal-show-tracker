@@ -13,13 +13,7 @@ import { IconButton } from '../icon-button/icon-button'
  */
 export const ShowActions: FC<ShowItemProps> = ({ show, onEdit, onDelete }) => (
   <div className="flex shrink-0 items-center gap-1">
-    <IconButton name="Edit" label={`Edit ${show.name}`} size={20} onClick={() => onEdit(show)} />
-    <IconButton
-      name="Trash"
-      label={`Delete ${show.name}`}
-      size={20}
-      color="var(--color-red-500)"
-      onClick={() => onDelete(show)}
-    />
+    <IconButton name="Edit" label={`Edit ${show.name}`} onClick={() => onEdit(show)} />
+    <IconButton name="Trash" label={`Delete ${show.name}`} color="var(--color-red-500)" onClick={() => onDelete(show)} />
   </div>
 )

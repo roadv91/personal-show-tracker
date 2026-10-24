@@ -19,9 +19,9 @@ describe('ShowCard', () => {
   it('shows the name as a heading, with status, rating, date, and notes', () => {
     render(<ShowCard show={completedShow} onEdit={vi.fn()} onDelete={vi.fn()} />)
     expect(screen.getByRole('heading', { name: 'Succession' })).toBeInTheDocument()
-    expect(screen.getByText('Completed')).toBeInTheDocument()
-    expect(screen.getByText('4.9', { exact: false })).toBeInTheDocument()
+    expect(screen.getByText('Completed:')).toBeInTheDocument()
     expect(screen.getByText('May 28, 2025')).toBeInTheDocument()
+    expect(screen.getByText('4.9', { exact: false })).toBeInTheDocument()
     expect(screen.getByText('“Roman Roy is incredibly written.”')).toBeInTheDocument()
   })
 
