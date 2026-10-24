@@ -8,13 +8,12 @@ import { Icon, type IconName } from '../icon/icon'
  */
 export type ButtonVariant = 'primary' | 'secondary'
 
-// TODO: Create `button/*` semantic tokens in Figma and use them here instead of primitives,
-// including a `color/white` primitive for the hard-coded `#ffffff` colors.
+// TODO: Create `button/*` semantic tokens in Figma and use them here instead of primitives.
 /** Colors and font weight for each variant. Written out in full so Tailwind can detect them. */
 const variantClassNames: Record<ButtonVariant, string> = {
-  primary: 'bg-neutral-900 font-bold text-[#ffffff] hover:bg-neutral-800 active:bg-neutral-700',
+  primary: 'bg-neutral-900 font-bold text-white hover:bg-neutral-800 active:bg-neutral-700',
   secondary:
-    'border border-neutral-300 bg-[#ffffff] text-neutral-900 hover:bg-neutral-50 active:bg-neutral-100',
+    'border border-neutral-300 bg-white text-neutral-900 hover:bg-neutral-50 active:bg-neutral-100',
 }
 
 /**

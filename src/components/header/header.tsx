@@ -7,7 +7,6 @@ export interface HeaderProps {
   onAddShow: () => void
 }
 
-// TODO: Replace the hard-coded `#ffffff` background with a `color/white` primitive once it's added in Figma.
 /**
  * White bar across the top of every page, with a bottom border. For now it only holds the
  * Add show button, at the far right of the screen (not limited to the page content's width).
@@ -18,7 +17,7 @@ export interface HeaderProps {
  * @returns The header element.
  */
 export const Header: FC<HeaderProps> = ({ onAddShow }) => (
-  <header className="flex justify-end border-b border-neutral-200 bg-[#ffffff] px-4 py-3 tablet:px-8">
+  <header className="flex justify-end border-b border-neutral-200 bg-white px-4 py-3 tablet:px-8">
     <Button label="Add show" iconLeft="Plus" variant="primary" onClick={onAddShow} />
   </header>
 )

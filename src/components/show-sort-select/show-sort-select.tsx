@@ -5,7 +5,7 @@ import { focusRingClassName } from '../../utils/class-names'
 import { sortOptions, type SortOption } from '../../utils/sort-options'
 import { Icon } from '../icon/icon'
 
-// TODO: Create semantic tokens in Figma and use them instead of primitives and the hard-coded `#ffffff`.
+// TODO: Create semantic tokens in Figma and use them instead of primitives.
 /**
  * Dropdown for choosing how shows are sorted, shown in the mobile layout of {@link Toolbar}.
  * It shows the sort method in the Redux store and dispatches `setSortMethod` when changed, so it
@@ -31,7 +31,7 @@ export const ShowSortSelect: FC = () => {
         id={selectId}
         value={sortMethod}
         onChange={(event) => dispatch(setSortMethod(event.target.value as SortOption))}
-        className={`min-h-11 w-full min-w-0 cursor-pointer appearance-none truncate rounded-lg border border-neutral-300 bg-[#ffffff] pr-9 pl-3 text-sm hover:bg-neutral-50 ${focusRingClassName}`}
+        className={`min-h-11 w-full min-w-0 cursor-pointer appearance-none truncate rounded-lg border border-neutral-300 bg-white pr-9 pl-3 text-sm hover:bg-neutral-50 ${focusRingClassName}`}
       >
         {sortOptions.map((option) => (
           <option key={option.value} value={option.value}>

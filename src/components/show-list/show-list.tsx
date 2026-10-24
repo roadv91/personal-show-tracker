@@ -13,7 +13,6 @@ import { SortableColumnHeader } from '../sortable-column-header/sortable-column-
  */
 const columnHeaderClassName = `${showTableCellSidePaddingClassName} py-0.5 text-xs font-semibold tracking-wide text-neutral-600 uppercase`
 
-// TODO: Replace the hard-coded `#ffffff` background with a `color/white` primitive once it's added in Figma.
 /**
  * Lists the user's shows from the Redux store: as cards on mobile, and as a table from the
  * `tablet` breakpoint up. Must be rendered inside the Redux `Provider`.
@@ -57,7 +56,7 @@ export const ShowList: FC<ShowActionHandlers> = ({ onEdit, onDelete }) => {
       </ul>
 
       {/* overflow-hidden clips the header row's background to the rounded corners */}
-      <div className="hidden overflow-hidden rounded-lg border border-neutral-200 bg-[#ffffff] shadow-sm tablet:block">
+      <div className="hidden overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm tablet:block">
         {/* Read as the sort buttons' description. Outside the table, so it doesn't become part of
             a column header's name; `hidden` keeps it off screen, and descriptions still work. */}
         <span id={sortDescriptionId} hidden>

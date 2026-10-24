@@ -39,6 +39,15 @@ describe('IconButton', () => {
     expect(svg).toHaveAttribute('fill', 'currentColor')
   })
 
+  it('shows the background unless showBackground is false', () => {
+    const { rerender } = render(<IconButton name="Trash" label="Delete show" />)
+    const button = screen.getByRole('button', { name: 'Delete show' })
+    expect(button).toHaveClass('bg-icon-button-surface')
+
+    rerender(<IconButton name="Trash" label="Delete show" showBackground={false} />)
+    expect(button).not.toHaveClass('bg-icon-button-surface')
+  })
+
   it('does not call onClick when disabled', async () => {
     const handleClick = vi.fn()
     render(<IconButton name="Trash" label="Delete show" onClick={handleClick} disabled />)

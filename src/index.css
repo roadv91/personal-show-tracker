@@ -6,6 +6,8 @@
 
   /* Replace Tailwind's default breakpoints. Mobile is the default, so unprefixed classes apply to it. */
   --breakpoint-*: initial;
+  /* 390px: below this, layouts are compacted for small phones */
+  --breakpoint-large-phone: 24.375rem;
   --breakpoint-tablet: 48rem;
   --breakpoint-desktop: 64rem;
 }
