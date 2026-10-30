@@ -2,6 +2,7 @@ import type { FC } from 'react'
 import { Calendar } from './assets/calendar'
 import { ChevronDown } from './assets/chevron-down'
 import { ChevronUp } from './assets/chevron-up'
+import { Close } from './assets/close'
 import { Edit } from './assets/edit'
 import { Filter } from './assets/filter'
 import { Plus } from './assets/plus'
@@ -19,6 +20,7 @@ export const iconComponentsMap = {
   Calendar,
   ChevronDown,
   ChevronUp,
+  Close,
   Edit,
   Filter,
   Plus,

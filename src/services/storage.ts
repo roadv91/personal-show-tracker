@@ -49,7 +49,7 @@ const isShow = (value: unknown): value is Show => {
     typeof show.id === 'string' &&
     typeof show.name === 'string' &&
     showStatuses.includes(show.status as Show['status']) &&
-    typeof show.rating === 'number' &&
+    (show.rating === undefined || typeof show.rating === 'number') &&
     (show.dateCompleted === undefined || typeof show.dateCompleted === 'string') &&
     (show.notes === undefined || typeof show.notes === 'string')
   )

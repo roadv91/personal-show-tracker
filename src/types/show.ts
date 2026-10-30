@@ -12,8 +12,8 @@ export interface Show {
   name: string
   /** Where the user is with the show. */
   status: ShowStatus
-  /** The user's rating, from 0 to 5 in steps of 0.1. */
-  rating: number
+  /** The user's rating, from 0 to 5 in steps of 0.1. Optional, since the user may not have rated it. */
+  rating?: number
   /**
    * Date the user finished the show, as an ISO date (`YYYY-MM-DD`). Optional even for completed shows,
    * since users may not remember it. Read it with `getCompletionDate`, which ignores it unless the show is completed.

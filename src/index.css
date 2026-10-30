@@ -16,4 +16,9 @@
   body {
     @apply bg-page-surface;
   }
+
+  /* Stop the page behind an open modal dialog from scrolling */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
 }

@@ -40,6 +40,11 @@ describe('ShowCard', () => {
     expect(container.querySelector('time')).not.toBeInTheDocument()
   })
 
+  it('leaves out the rating when the show has none', () => {
+    render(<ShowCard show={{ ...ongoingShow, rating: undefined }} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    expect(screen.queryByText(/Rating:/)).not.toBeInTheDocument()
+  })
+
   it('calls onEdit and onDelete with the show', async () => {
     const handleEdit = vi.fn()
     const handleDelete = vi.fn()

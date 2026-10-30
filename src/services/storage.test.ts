@@ -5,6 +5,7 @@ import { loadShows, loadSortOption, saveShows, saveSortOption, storageKeys } fro
 const shows: Show[] = [
   { id: '1', name: 'Severance', status: 'ongoing', rating: 4.8, notes: 'Mind-bending.' },
   { id: '2', name: 'Breaking Bad', status: 'completed', rating: 4.7, dateCompleted: '2024-08-12' },
+  { id: '3', name: 'The Bear', status: 'dropped' },
 ]
 
 afterEach(() => vi.restoreAllMocks())
