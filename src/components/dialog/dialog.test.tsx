@@ -57,11 +57,12 @@ describe('Dialog', () => {
         <p>Content</p>
       </Dialog>,
     )
-    const dialog = screen.getByRole('dialog')
-    // Browsers fire `cancel` on the dialog when Esc is pressed
-    fireEvent(dialog, new Event('cancel', { cancelable: true }))
+    // Browsers fire `cancel` on the dialog when Esc is pressed, then close it unless the event is
+    // canceled. jsdom never closes it, so check that the event was canceled instead.
+    const cancelEvent = new Event('cancel', { cancelable: true })
+    fireEvent(screen.getByRole('dialog'), cancelEvent)
     expect(handleClose).toHaveBeenCalledOnce()
-    expect(dialog).toHaveAttribute('open')
+    expect(cancelEvent.defaultPrevented).toBe(true)
   })
 
   it('calls onClose on a backdrop click, but not on a click inside', async () => {
