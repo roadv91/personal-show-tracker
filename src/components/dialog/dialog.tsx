@@ -34,6 +34,9 @@ export interface DialogProps {
   placement: DialogPlacement
 }
 
+/** Props for {@link Modal}, {@link BottomSheet}, and {@link ResponsiveSheet}, which set the placement themselves. */
+export type SheetProps = Omit<DialogProps, 'placement'>
+
 /**
  * Shared base of {@link Modal}, {@link BottomSheet}, and {@link ResponsiveSheet}: a native modal
  * `<dialog>` with a heading, a close button, and scrollable content. Use one of those three

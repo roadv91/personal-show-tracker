@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { Show } from '../../types/show'
-import type { SheetProps } from '../modal/modal'
+import type { SheetProps } from '../dialog/dialog'
 import { ResponsiveSheet } from '../responsive-sheet/responsive-sheet'
 
 /**

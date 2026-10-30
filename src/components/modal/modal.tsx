@@ -1,8 +1,5 @@
 import type { FC } from 'react'
-import { Dialog, type DialogProps } from '../dialog/dialog'
-
-/** Props for {@link Modal}, {@link BottomSheet}, and {@link ResponsiveSheet}. */
-export type SheetProps = Omit<DialogProps, 'placement'>
+import { Dialog, type SheetProps } from '../dialog/dialog'
 
 /**
  * Dialog centered on screen over a dimmed backdrop, up to 512px wide and 85% of the screen tall.

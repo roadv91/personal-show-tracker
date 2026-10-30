@@ -1,6 +1,5 @@
 import type { FC } from 'react'
-import { Dialog } from '../dialog/dialog'
-import type { SheetProps } from '../modal/modal'
+import { Dialog, type SheetProps } from '../dialog/dialog'
 
 /**
  * Dialog pinned to the bottom of the screen at full width, with rounded top corners, up to 90%

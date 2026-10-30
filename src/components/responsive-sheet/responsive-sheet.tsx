@@ -1,6 +1,5 @@
 import type { FC } from 'react'
-import { Dialog } from '../dialog/dialog'
-import type { SheetProps } from '../modal/modal'
+import { Dialog, type SheetProps } from '../dialog/dialog'
 
 /**
  * Dialog that's a {@link BottomSheet} on phones and a centered {@link Modal} from the `tablet`
