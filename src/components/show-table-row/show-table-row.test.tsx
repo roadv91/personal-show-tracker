@@ -45,6 +45,12 @@ describe('ShowTableRow', () => {
     expect(container.querySelector('time')).not.toBeInTheDocument()
   })
 
+  it('shows a dash, announced as "No rating", for an unrated show', () => {
+    renderRow({ show: { ...completedShow, rating: undefined }, onEdit: vi.fn(), onDelete: vi.fn() })
+    expect(screen.getByText('—')).toHaveAttribute('aria-hidden', 'true')
+    expect(screen.getByText('No rating')).toBeInTheDocument()
+  })
+
   it('calls onEdit and onDelete with the show', async () => {
     const handleEdit = vi.fn()
     const handleDelete = vi.fn()

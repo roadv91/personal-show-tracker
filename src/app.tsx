@@ -1,5 +1,6 @@
 import { useEffect, useState, type FC } from 'react'
 import { Provider } from 'react-redux'
+import { AddUpdateShow, type AddUpdateShowMode } from './components/add-update-show/add-update-show'
 import { Header } from './components/header/header'
 import { ShowList } from './components/show-list/show-list'
 import { Title } from './components/title/title'
@@ -15,8 +16,9 @@ import './index.css'
  * The page itself: header, title, toolbar, and the show list. Must be rendered inside the Redux
  * `Provider`, which {@link App} sets up.
  *
- * Deleting a show removes it from the store, which saves it. Editing, filtering, and adding only
- * announce the click, since those features aren't connected yet.
+ * Deleting a show removes it from the store, which saves it. Add show and each show's edit button
+ * open the {@link AddUpdateShow} sheet (its form is a placeholder for now). Filtering only announces the
+ * click, since it isn't connected yet.
  *
  * @returns The page layout.
  */
@@ -25,8 +27,17 @@ const AppContent: FC = () => {
   const dispatch = useAppDispatch()
   // A temporary on-screen message about the last click, not app data, so it stays out of the store
   const [lastAction, setLastAction] = useState('')
+  // Whether the show form sheet is open, and whether it adds a show or edits the given one. Kept
+  // apart so closing doesn't reset the mode, which would switch the title while the sheet closes.
+  const [isShowFormOpen, setIsShowFormOpen] = useState(false)
+  const [showFormMode, setShowFormMode] = useState<AddUpdateShowMode>({ mode: 'add' })
 
-  const handleEdit = (show: Show) => setLastAction(`Edit ${show.name} clicked`)
+  /** Opens the show form sheet in the given mode. */
+  const openShowForm = (mode: AddUpdateShowMode) => {
+    setShowFormMode(mode)
+    setIsShowFormOpen(true)
+  }
+
   const handleDelete = (show: Show) => {
     dispatch(deleteShow(show.id))
     setLastAction(`${show.name} deleted`)
@@ -34,14 +45,15 @@ const AppContent: FC = () => {
 
   return (
     <>
-      <Header onAddShow={() => setLastAction('Add show clicked')} />
+      <Header onAddShow={() => openShowForm({ mode: 'add' })} />
+      <AddUpdateShow {...showFormMode} open={isShowFormOpen} onClose={() => setIsShowFormOpen(false)} />
       <main className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 tablet:px-8">
         {/* Mobile: title, then the toolbar below. Tablet and up: title left, toolbar right. */}
         <div className="flex flex-col gap-4 tablet:flex-row tablet:items-center tablet:justify-between">
           <Title title="My Shows" description={formatShowCount(showCount)} />
           <Toolbar onFilter={() => setLastAction('Filter clicked')} />
         </div>
-        <ShowList onEdit={handleEdit} onDelete={handleDelete} />
+        <ShowList onEdit={(show) => openShowForm({ mode: 'edit', show })} onDelete={handleDelete} />
         <p aria-live="polite" className="text-sm text-neutral-600">
           {lastAction}
         </p>

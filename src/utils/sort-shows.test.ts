@@ -32,6 +32,13 @@ describe('sortShows', () => {
     expect(names(sorted).slice(-3)).toEqual(['Able', 'Delta', 'Zulu'])
   })
 
+  it.each(['rating-lowest', 'rating-highest'] as const)('keeps unrated shows last for %s, sorted by name', (option) => {
+    const unratedYankee: Show = { ...alpha, id: '7', name: 'Yankee', rating: undefined }
+    const unratedEcho: Show = { ...alpha, id: '8', name: 'Echo', rating: undefined }
+    const sorted = sortShows([unratedYankee, alpha, unratedEcho, bravo], option)
+    expect(names(sorted).slice(-2)).toEqual(['Echo', 'Yankee'])
+  })
+
   it.each(['rating-lowest', 'rating-highest', 'date-oldest', 'date-newest'] as const)(
     'sorts ties by name A to Z for %s',
     (option) => {

@@ -9,8 +9,8 @@ import { ShowStatusBadge } from '../show-status-badge/show-status-badge'
  * Card showing one show, used in the mobile layout of {@link ShowList}.
  *
  * Shows the name (as a heading, so screen reader users can jump between shows), the status badge
- * (with the completion date, for completed shows that have one), rating, edit and delete buttons
- * (vertically centered beside the details), and the notes if there are any.
+ * (with the completion date, for completed shows that have one), the rating if there is one, edit
+ * and delete buttons (vertically centered beside the details), and the notes if there are any.
  *
  * Below the `large-phone` breakpoint (390px) the spacing tightens and the rating stacks below the
  * status badge, leaving more room for the name.
@@ -29,7 +29,7 @@ export const ShowCard: FC<ShowItemProps> = ({ show, onEdit, onDelete }) => (
         <h2 className="text-sm font-bold wrap-anywhere text-neutral-900">{show.name}</h2>
         <div className="flex flex-col items-start gap-2 large-phone:flex-row large-phone:flex-wrap large-phone:items-center">
           <ShowStatusBadge status={show.status} completionDate={getCompletionDate(show)} />
-          <ShowRating rating={show.rating} />
+          {show.rating !== undefined && <ShowRating rating={show.rating} />}
         </div>
       </div>
       <ShowActions show={show} onEdit={onEdit} onDelete={onDelete} />

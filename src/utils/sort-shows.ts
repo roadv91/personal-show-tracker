@@ -55,10 +55,33 @@ const compareNames = (first: Show, second: Show) =>
   first.name.localeCompare(second.name, undefined, { sensitivity: 'base' })
 
 /**
+ * Compares two values that may be missing. Missing values come last whatever the direction, so
+ * e.g. unrated shows stay at the end whether the list is sorted highest or lowest first.
+ *
+ * @param first - A value, or `undefined` if it's missing.
+ * @param second - Another value, or `undefined` if it's missing.
+ * @param sign - `1` to sort ascending, `-1` to sort descending.
+ * @param compare - Compares two present values, ascending.
+ * @returns A negative, zero, or positive number, as for `Array.sort`.
+ */
+const compareOptional = <Value>(
+  first: Value | undefined,
+  second: Value | undefined,
+  sign: number,
+  compare: (first: Value, second: Value) => number,
+) => {
+  if (first === undefined && second === undefined) return 0
+  if (first === undefined) return 1
+  if (second === undefined) return -1
+  return sign * compare(first, second)
+}
+
+/**
  * Returns the shows sorted by the given option. Doesn't change the given array.
  *
- * Shows without a completion date (see {@link getCompletionDate}) always come last, in both
- * directions. Shows with equal values are sorted by name, A to Z.
+ * Shows without a rating, or without a completion date (see {@link getCompletionDate}), always come
+ * last when sorting by that column, in both directions. Shows with equal values are sorted by name,
+ * A to Z.
  *
  * @param shows - The shows to sort.
  * @param sortOption - How to sort them.
@@ -72,15 +95,17 @@ export const sortShows = (shows: readonly Show[], sortOption: SortOption): Show[
     if (column === 'name') return sign * compareNames(first, second)
 
     if (column === 'rating') {
-      return sign * (first.rating - second.rating) || compareNames(first, second)
+      return (
+        compareOptional(first.rating, second.rating, sign, (firstRating, secondRating) => firstRating - secondRating) ||
+        compareNames(first, second)
+      )
     }
 
-    const firstDate = getCompletionDate(first)
-    const secondDate = getCompletionDate(second)
-    if (!firstDate && !secondDate) return compareNames(first, second)
-    if (!firstDate) return 1
-    if (!secondDate) return -1
     // ISO dates (YYYY-MM-DD) sort correctly as plain strings
-    return sign * firstDate.localeCompare(secondDate) || compareNames(first, second)
+    return (
+      compareOptional(getCompletionDate(first), getCompletionDate(second), sign, (firstDate, secondDate) =>
+        firstDate.localeCompare(secondDate),
+      ) || compareNames(first, second)
+    )
   })
 }

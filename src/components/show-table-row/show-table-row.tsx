@@ -2,6 +2,7 @@ import type { FC } from 'react'
 import type { ShowItemProps } from '../../types/show'
 import { getCompletionDate } from '../../utils/get-completion-date'
 import { FormattedDate } from '../formatted-date/formatted-date'
+import { MissingValue } from '../missing-value/missing-value'
 import { ShowActions } from '../show-actions/show-actions'
 import { ShowRating } from '../show-rating/show-rating'
 import { ShowStatusBadge } from '../show-status-badge/show-status-badge'
@@ -42,17 +43,10 @@ export const ShowTableRow: FC<ShowItemProps> = ({ show, onEdit, onDelete }) => {
         <ShowStatusBadge status={show.status} />
       </td>
       <td className={`${showTableCellClassName} whitespace-nowrap text-neutral-600`}>
-        {completionDate ? (
-          <FormattedDate isoDate={completionDate} />
-        ) : (
-          <>
-            <span aria-hidden="true">—</span>
-            <span className="sr-only">No completion date</span>
-          </>
-        )}
+        {completionDate ? <FormattedDate isoDate={completionDate} /> : <MissingValue label="No completion date" />}
       </td>
-      <td className={showTableCellClassName}>
-        <ShowRating rating={show.rating} />
+      <td className={`${showTableCellClassName} text-neutral-600`}>
+        {show.rating === undefined ? <MissingValue label="No rating" /> : <ShowRating rating={show.rating} />}
       </td>
       <td className={`${showTableCellClassName} wrap-anywhere text-neutral-600 italic`}>
         {show.notes && `“${show.notes}”`}
