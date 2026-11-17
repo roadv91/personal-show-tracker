@@ -65,12 +65,16 @@ const isTokenNode = (value: unknown): value is TokenNode =>
  * @param tokensJson - The parsed contents of `tokens/tokens.json`.
  * @param collectionName - The collection key, written as `<collection>/<mode>`.
  * @returns The collection's token tree.
- * @throws If the collection is missing, listing the collections that do exist.
+ * @throws If the export isn't an object, or the collection is missing (listing the ones that exist).
  */
 const getCollection = (tokensJson: unknown, collectionName: string): TokenNode => {
-  const collection = isTokenNode(tokensJson) ? tokensJson[collectionName] : undefined
+  if (!isTokenNode(tokensJson)) {
+    throw new Error('tokens.json should contain an object of collections')
+  }
+
+  const collection = tokensJson[collectionName]
   if (!isTokenNode(collection)) {
-    const availableNames = isTokenNode(tokensJson) ? Object.keys(tokensJson).join(', ') : 'none'
+    const availableNames = Object.keys(tokensJson).join(', ')
     throw new Error(`Collection "${collectionName}" not found in tokens.json (found: ${availableNames})`)
   }
   return collection
@@ -105,11 +109,15 @@ const flattenTokens = (group: TokenNode, path: string[] = []): FlatToken[] => {
 }
 
 /**
- * Finds the primitive a token references, when its value is a reference like `{spacing.8}`.
+ * Gets the primitive a token uses.
+ *
+ * - `input/spacing/content` (value `{spacing.8}`) → the `spacing/8` token
+ * - `spacing/8` (value `8`) → `undefined`
+ *
  * @param token - The token to check.
- * @param primitivesByName - Every primitive, keyed by its dotted path.
- * @returns The referenced primitive, or `undefined` if the token holds a raw value.
- * @throws If the reference names a primitive that doesn't exist.
+ * @param primitivesByName - Every primitive, by name (e.g. `spacing.8`).
+ * @returns The primitive, or `undefined` if the token has its own value.
+ * @throws If it points to a primitive that doesn't exist (e.g. `{spacing.99}`).
  */
 const getReferencedPrimitive = (token: FlatToken, primitivesByName: Map<string, FlatToken>): FlatToken | undefined => {
   if (typeof token.value !== 'string') return undefined
@@ -132,11 +140,15 @@ const getReferencedPrimitive = (token: FlatToken, primitivesByName: Map<string, 
 const toVariableReference = (primitive: FlatToken): string => `var(--${primitive.path.join('-')})`
 
 /**
- * Converts a color token's value to CSS: a reference to its primitive, or the raw color (e.g. `#f5f5f5`).
+ * Converts a color token to CSS.
+ *
+ * - `input/border` → `var(--color-neutral-300)`
+ * - `color/white` → `#ffffff`
+ *
  * @param token - The color token.
- * @param primitivesByName - Every primitive, keyed by its dotted path.
+ * @param primitivesByName - Every primitive, by name (e.g. `color.neutral.300`).
  * @returns The CSS value.
- * @throws If the value isn't a string, or references a primitive that doesn't exist.
+ * @throws If the value isn't a string, or points to a primitive that doesn't exist.
  */
 const toColorValue = (token: FlatToken, primitivesByName: Map<string, FlatToken>): string => {
   const primitive = getReferencedPrimitive(token, primitivesByName)
@@ -148,13 +160,20 @@ const toColorValue = (token: FlatToken, primitivesByName: Map<string, FlatToken>
 }
 
 /**
- * Converts a number token's value (in Figma pixels) to a CSS length. rem tokens reference their
- * primitive; px tokens use the primitive's number directly, since the primitive variables are in rem.
+ * Converts a number token to CSS.
+ *
+ * Why two units: rem grows with the browser's text size, which helps accessibility, so most tokens
+ * use it. But a 1px border in rem can render blurry, so border and focus ring widths use px.
+ *
+ * - `input/spacing/content` → `var(--spacing-8)`
+ * - `spacing/8` → `0.5rem`
+ * - `input/border-width` → `1px` (px tokens are always a plain number, so borders stay crisp)
+ *
  * @param token - The number token.
- * @param primitivesByName - Every primitive, keyed by its dotted path.
- * @param unit - The unit to write the value in.
- * @returns The CSS value, e.g. `var(--spacing-8)`, `0.5rem`, or `1px`.
- * @throws If the value isn't a number, or references a primitive that doesn't exist.
+ * @param primitivesByName - Every primitive, by name (e.g. `spacing.8`).
+ * @param unit - `rem`, or `px` for border and focus ring widths.
+ * @returns The CSS value.
+ * @throws If the value isn't a number, or points to a primitive that doesn't exist.
  */
 const toLengthValue = (token: FlatToken, primitivesByName: Map<string, FlatToken>, unit: LengthUnit): string => {
   const primitive = getReferencedPrimitive(token, primitivesByName)
@@ -169,10 +188,15 @@ const toLengthValue = (token: FlatToken, primitivesByName: Map<string, FlatToken
 }
 
 /**
- * Picks the Tailwind theme namespace for a semantic number token from the parts of its name.
- * @param path - The token's path, e.g. `['input', 'spacing', 'content']`.
- * @returns `spacing` (padding, gap, width, height classes), `radius` (`rounded-*` classes), or
- *   `undefined` when Tailwind has no namespace for it (e.g. border widths).
+ * Decides which kind of Tailwind class a number token gets, from the words in its name.
+ *
+ * - `input/spacing/content` → `spacing` (classes like `gap-input-spacing-content`)
+ * - `input/size/field-height` → `spacing` (classes like `h-input-size-field-height`)
+ * - `input/radius/field` → `radius` (classes like `rounded-input-radius-field`)
+ * - `input/border-width` → `undefined` (no class; Tailwind has no kind for border widths)
+ *
+ * @param path - The token's name split into parts, e.g. `['input', 'spacing', 'content']`.
+ * @returns `spacing`, `radius`, or `undefined`.
  */
 const getNumberNamespace = (path: string[]): 'spacing' | 'radius' | undefined => {
   if (path.includes('spacing') || path.includes('size')) return 'spacing'
