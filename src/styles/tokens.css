@@ -45,4 +45,59 @@
   --color-icon-button-surface: var(--color-neutral-100);
   --color-icon-button-surface-hover: var(--color-neutral-200);
   --color-icon-button-surface-active: var(--color-neutral-300);
+  --color-input-surface: var(--color-white);
+  --color-input-surface-disabled: var(--color-neutral-100);
+  --color-input-border: var(--color-neutral-300);
+  --color-input-border-disabled: var(--color-neutral-200);
+  --color-input-border-error: var(--color-red-700);
+  --color-input-content: var(--color-neutral-900);
+  --color-input-content-disabled: var(--color-neutral-400);
+  --color-input-label-content: var(--color-neutral-700);
+  --color-input-description-content: var(--color-neutral-600);
+  --color-input-placeholder-content: var(--color-neutral-500);
+  --color-input-icon-content: var(--color-neutral-500);
+  --color-input-error-icon-surface: var(--color-red-700);
+  --color-input-error-icon-content: var(--color-white);
+  --color-input-focus-ring-color: var(--color-blue-600);
+  --radius-input-focus-ring-radius: var(--radius-10);
+  --color-input-error-message-content: var(--color-red-700);
+  --spacing-input-spacing-content: var(--spacing-8);
+  --spacing-input-spacing-field-horizontal: var(--spacing-12);
+  --spacing-input-size-field-height: var(--spacing-40);
+  --spacing-input-size-icon: var(--spacing-18);
+  --spacing-input-size-width: var(--size-320);
+  --radius-input-radius-field: var(--radius-8);
+  --color-star-content: var(--color-amber-600);
+}
+
+/*
+ * Variables without Tailwind classes, used through var() or e.g. `p-(--spacing-8)`.
+ * Number primitives stay out of the theme so they don't override Tailwind's spacing scale (`gap-1`).
+ * Semantic tokens here have no Tailwind namespace, e.g. `border-(length:--input-border-width)`.
+ */
+:root {
+  /* Primitives */
+  --spacing-0: 0;
+  --spacing-1: 0.0625rem;
+  --spacing-2: 0.125rem;
+  --spacing-8: 0.5rem;
+  --spacing-12: 0.75rem;
+  --spacing-18: 1.125rem;
+  --spacing-20: 1.25rem;
+  --spacing-24: 1.5rem;
+  --spacing-32: 2rem;
+  --spacing-40: 2.5rem;
+  --radius-0: 0;
+  --radius-8: 0.5rem;
+  --radius-10: 0.625rem;
+  --radius-full: 62.4375rem;
+  --font-size-12: 0.75rem;
+  --font-size-14: 0.875rem;
+  --font-size-16: 1rem;
+  --size-320: 20rem;
+
+  /* Semantic tokens */
+  --input-focus-ring-width: 2px;
+  --input-focus-ring-offset: 2px;
+  --input-border-width: 1px;
 }
