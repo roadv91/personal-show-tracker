@@ -77,6 +77,27 @@ describe('FormField', () => {
     expect(screen.getByRole('textbox')).toBeDisabled()
   })
 
+  it('ignores the error while disabled and shows the description instead', () => {
+    renderField({ disabled: true, error: 'Enter a name.', description: 'As shown on the poster.' })
+    const input = screen.getByRole('textbox')
+    expect(input).not.toBeInvalid()
+    expect(input).toHaveAccessibleDescription('As shown on the poster.')
+    expect(screen.queryByText('Enter a name.')).not.toBeInTheDocument()
+  })
+
+  it('shows only the description while disabled, even with showDescriptionOnError', () => {
+    renderField({
+      disabled: true,
+      error: 'Enter a name.',
+      description: 'As shown on the poster.',
+      showDescriptionOnError: true,
+    })
+    const input = screen.getByRole('textbox')
+    expect(input).not.toBeInvalid()
+    expect(input).toHaveAccessibleDescription('As shown on the poster.')
+    expect(screen.queryByText('Enter a name.')).not.toBeInTheDocument()
+  })
+
   it('uses the given id for the input', () => {
     renderField({ id: 'show-name' })
     expect(screen.getByRole('textbox')).toHaveAttribute('id', 'show-name')

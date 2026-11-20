@@ -4,6 +4,7 @@ import { ChevronDown } from './assets/chevron-down'
 import { ChevronUp } from './assets/chevron-up'
 import { Close } from './assets/close'
 import { Edit } from './assets/edit'
+import { ExclamationCircle } from './assets/exclamation-circle'
 import { Filter } from './assets/filter'
 import { Plus } from './assets/plus'
 import { Sort } from './assets/sort'
@@ -22,6 +23,7 @@ export const iconComponentsMap = {
   ChevronUp,
   Close,
   Edit,
+  ExclamationCircle,
   Filter,
   Plus,
   Sort,

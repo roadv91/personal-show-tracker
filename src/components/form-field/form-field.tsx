@@ -21,7 +21,10 @@ export interface FormFieldProps {
    * when to show it: the form (or whoever renders the field) passes it in.
    */
   error?: string
-  /** Whether the field is disabled. Defaults to `false`. */
+  /**
+   * Whether the field is disabled. Defaults to `false`. A disabled field ignores `error`, since it
+   * can't be fixed: no message, and the input isn't marked invalid.
+   */
   disabled?: boolean
   /** `id` for the input. Defaults to a generated one; pass one to target the input (e.g. to focus it). */
   id?: string
@@ -54,11 +57,12 @@ export const FormField: FC<FormFieldProps> = ({
   hideRequiredStar = false,
   description,
   showDescriptionOnError = false,
-  error,
+  error: givenError,
   disabled = false,
   id,
   children,
 }) => {
+  const error = disabled ? undefined : givenError
   const generatedId = useId()
   const controlId = id ?? generatedId
   const errorId = `${controlId}-error`
