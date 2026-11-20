@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, use } from 'react'
 
 /**
  * What a {@link FormField} tells the input inside it, so the input can link itself to the
@@ -28,7 +28,7 @@ export const FormFieldContext = createContext<FormFieldControlProps | null>(null
  * @throws If the input isn't inside a `FormField`, because it would have no accessible label.
  */
 export const useFormFieldControl = (): FormFieldControlProps => {
-  const controlProps = useContext(FormFieldContext)
+  const controlProps = use(FormFieldContext)
   if (!controlProps) {
     throw new Error('useFormFieldControl must be used inside a FormField.')
   }

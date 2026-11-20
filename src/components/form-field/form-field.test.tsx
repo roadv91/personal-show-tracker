@@ -55,6 +55,13 @@ describe('FormField', () => {
     expect(screen.queryByText('As shown on the poster.')).not.toBeInTheDocument()
   })
 
+  it('links the error to the input when there is no description', () => {
+    renderField({ error: 'Enter a name.' })
+    const input = screen.getByRole('textbox')
+    expect(input).toBeInvalid()
+    expect(input).toHaveAccessibleDescription('Enter a name.')
+  })
+
   it('can keep the description below the error', () => {
     renderField({ description: 'As shown on the poster.', error: 'Enter a name.', showDescriptionOnError: true })
     expect(screen.getByRole('textbox')).toHaveAccessibleDescription('Enter a name. As shown on the poster.')
